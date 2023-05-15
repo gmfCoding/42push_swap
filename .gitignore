@@ -1,0 +1,8 @@
+program
+**/*.swp
+**/*.swo
+**/*.o
+**/*.a
+**/obj/
+.git
+.DS_Store
