@@ -25,7 +25,7 @@ LIB-I = $(patsubst %,-I%,$(dir $(LIBS)))
 LIB-l = $(subst lib,-l,$(basename $(notdir $(LIBSF))))
 LIB-L = $(patsubst %,-L$(DIRLIB)%, $(dir $(LIBSF)))
 
-NAME = so_long
+NAME = push_swap
 CC = cc
 
 WFLAGS = -Wall -Werror -Wextra
