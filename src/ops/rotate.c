@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:49:38 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/23 12:49:41 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/23 14:12:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -20,6 +20,7 @@ void	st_rotate(t_stack *s)
 	s->head = s->head->next;
 	s->tail->next = node;
 	s->tail = node;
+	node->next = NULL;
 	if (!s->head)
 		s->head = s->tail;
 }
