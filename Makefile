@@ -1,4 +1,4 @@
-SRCSF =	main.c
+SRCSF =	main.c operations.c node.c stack.c $(addprefix ops/, push.c rev_rotate.c rotate.c swap.c)
 
 OBJSF = $(patsubst %.c,%.o, $(SRCSF))
 
@@ -46,7 +46,7 @@ $(NAME): $(LIBS) $(OBJS)
 
 # SOURCE TO OBJ
 $(OBJS): $(DIROBJ)%.o : $(DIRSRC)%.c $(INCS)
-	@mkdir -p $(DIROBJ)
+	@mkdir -p $(dir $@)
 	-$(CC) $(OFLAGS) -o $@ -c $<
 
 # COMPILE LIBS

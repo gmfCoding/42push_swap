@@ -6,32 +6,36 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:17:54 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/17 22:22:23 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/23 12:45:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STACK_H
 # define STACK_H
 
-typedef t_struct s_struct;
-
-typedef t_stnode s_stnode;
+typedef struct s_stack	t_stack;
+typedef struct s_node	t_node;
 
 struct s_stack
 {
-	t_stnode	*head;
-	t_stnode	*tail;
-	int			count;
+	char	*name;
+	t_node	*head;
+	t_node	*tail;
+	int		count;
 };
 
-struct s_stnode
+struct s_node
 {
-	t_stnode	*next;
-	t_stnode	*prev;
-	int			value;
+	t_node	*next;
+	t_node	*prev;
+	int		value;
 };
 
-int	st_ishead(t_stnode node);
-int	st_istail(t_stnode node);
+int		st_ishead(t_node *node);
+int		st_istail(t_node *node);
+t_node	*stn_new(int value);
+t_stack	*st_new(char *name);
+void	st_push(t_stack *stack, int value);
+int		st_pop(t_stack *stack);
 
 #endif
