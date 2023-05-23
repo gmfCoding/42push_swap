@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:12:35 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/23 13:40:39 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/23 14:31:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -20,44 +20,42 @@ void	stn_print(t_sort *sort)
 
 	a = sort->a->head;
 	b = sort->b->head;
+	ft_printf("---------\n");
 	while (a || b)
 	{
 		if (a)
 		{
-			ft_printf("%d", a->value);
+			ft_printf("%d\t", a->value);
 			a = a->next;
 		}
 		if (b)
 		{
-			ft_printf("\t%d", b->value);
+			ft_printf("%d", b->value);
 			b = b->next;
 		}
 		ft_printf("\n");
 	}
-	ft_printf("-------\n");
+	ft_printf("---------\n");
 	ft_printf("A\tB\n");
 }
 
 int	main(int argc, char **argv)
 {
 	t_sort	sort;
-	t_node	*next;
-	t_node	*prev;
 	int		i;
 
 	sort.a = st_new("a");
 	sort.b = st_new("b");
-	sort.a->head = stn_new(ft_atoi(argv[1]));
-	next = sort.a->head;
-	i = 2;
-	while (i < argc)
+	i = argc - 1;
+	while (i > 0)
 	{
-		next->next = stn_new(ft_atoi(argv[i]));
-		prev = next;
-		next = next->next;
-		next->prev = prev;
-		i++;
+		st_push(sort.a, ft_atoi(argv[i]));
+		i--;
 	}
-	sort.a->tail = next;
+	op_pb(&sort);
+	op_ra(&sort);
+	op_pb(&sort);
+	op_rb(&sort);
+	op_sa(&sort);
 	stn_print(&sort);
 }
