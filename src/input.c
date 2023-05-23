@@ -1,44 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swap.c                                             :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 11:55:27 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/23 22:04:33 by clovell          ###   ########.fr       */
+/*   Created: 2023/05/23 21:54:40 by clovell           #+#    #+#             */
+/*   Updated: 2023/05/23 22:00:20 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 #include "sort.h"
 
-void	st_swap(t_stack	*s)
+void	parse(t_sort *sort, int argc, char **argv)
 {
-	int	first;
-	int	second;
-	if (!s->head || !s->head->next)
-		return ;
-	first = st_pop(s);
-	second = st_pop(s);
-	st_push(s, first);
-	st_push(s, second);
-}
+	int	i;
 
-void	op_sa(t_sort *sort)
-{
-	write_op("sa");
-	st_swap(sort->a);
-}
-
-void	op_sb(t_sort *sort)
-{
-	write_op("sb");
-	st_swap(sort->b);
-}
-
-void	op_ss(t_sort *sort)
-{
-	write_op("ss (sa, sb)");
-	st_swap(sort->a);
-	st_swap(sort->b);
+	i = argc - 1;
+	while (i > 0)
+	{
+		st_push(sort->a, ft_atoi(argv[i]));
+		i--;
+	}
 }
