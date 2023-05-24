@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:55:27 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/23 22:04:33 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/24 16:59:02 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -28,12 +28,14 @@ void	op_sa(t_sort *sort)
 {
 	write_op("sa");
 	st_swap(sort->a);
+	sort->op_counter++;
 }
 
 void	op_sb(t_sort *sort)
 {
 	write_op("sb");
 	st_swap(sort->b);
+	sort->op_counter++;
 }
 
 void	op_ss(t_sort *sort)
@@ -41,4 +43,5 @@ void	op_ss(t_sort *sort)
 	write_op("ss (sa, sb)");
 	st_swap(sort->a);
 	st_swap(sort->b);
+	sort->op_counter++;
 }

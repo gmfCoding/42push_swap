@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:12:35 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/23 22:05:24 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/24 17:08:23 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -29,6 +29,8 @@ void	stn_print(t_sort *sort)
 			ft_printf("%d\t", a->value);
 			a = a->next;
 		}
+		else
+			ft_printf("\t");
 		if (b)
 		{
 			ft_printf("%d", b->value);
@@ -38,6 +40,7 @@ void	stn_print(t_sort *sort)
 	}
 	ft_printf("---------\n");
 	ft_printf("A\tB\n");
+	ft_printf("in %d operations.", sort->op_counter);
 }
 
 t_sort	*initialise(int argc, char **argv)
@@ -45,6 +48,7 @@ t_sort	*initialise(int argc, char **argv)
 	t_sort	*sort;
 
 	sort = ft_calloc(sizeof(t_sort), 1);
+	sort->op_counter = 0;
 	sort->a = st_new("a");
 	sort->b = st_new("b");
 	parse(sort, argc, argv);
@@ -56,11 +60,6 @@ int	main(int argc, char **argv)
 	t_sort	*sort;
 
 	sort = initialise(argc, argv);
-
-	op_pb(sort);
-	op_ra(sort);
-	op_pb(sort);
-	op_rb(sort);
-	op_sa(sort);
+	bubble_sort(sort);
 	stn_print(sort);
 }
