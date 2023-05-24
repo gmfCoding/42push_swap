@@ -1,4 +1,4 @@
-SRCSF =	main.c operations.c node.c stack.c input.c $(addprefix ops/, push.c rev_rotate.c rotate.c swap.c)
+SRCSF =	main.c operations.c node.c stack.c input.c bubble_sort.c $(addprefix ops/, push.c rev_rotate.c rotate.c swap.c)
 
 OBJSF = $(patsubst %.c,%.o, $(SRCSF))
 

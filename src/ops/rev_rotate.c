@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:49:24 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/23 12:49:31 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/24 16:58:41 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ void	op_rra(t_sort *sort)
 {
 	write_op("rra");
 	st_rev_rotate(sort->a);
+	sort->op_counter++;
 }
 
 void	op_rrb(t_sort *sort)
 {
 	write_op("rrb");
 	st_rev_rotate(sort->b);
+	sort->op_counter++;
 }
 
 void	op_rrr(t_sort *sort)
@@ -45,4 +47,5 @@ void	op_rrr(t_sort *sort)
 	write_op("rrr (rra, rrb)");
 	st_rev_rotate(sort->a);
 	st_rev_rotate(sort->b);
+	sort->op_counter++;
 }
