@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:19:55 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/24 16:58:18 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/25 11:59:24 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ struct s_sort
 	t_stack	*b;
 	int		op_counter;
 };
+
+typedef void (*t_opfunc)(t_sort *);
+
 void	bubble_sort(t_sort *sort);
 
 void	write_op(char *op);
