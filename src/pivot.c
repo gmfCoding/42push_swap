@@ -18,15 +18,15 @@ void	swap(int *a, int *b)
 	*a = temp;
 }
 
-static int	partition(t_median *median, int first, int last)
+static int	partition(t_median *median, int left, int right)
 {
-	const int val = median->array[last];
+	const int val = median->array[right];
 	int			i;
 	int			j;
 
-	i = first;
-	j = first;
-	while (j < last)
+	i = left;
+	j = left;
+	while (j < right)
 	{
 		if (median->array[j] < val)
 		{
@@ -39,30 +39,30 @@ static int	partition(t_median *median, int first, int last)
 	return (i);
 }
 
-static void	median_correct(t_median *median, int first, int last, int half)
+static void	median_correct(t_median *median, int left, int right, int select)
 {
 	int p_index;
 
-	if (first < last)
+	if (left < right)
 	{
-		swap(&median->[median->size / 2], &median->array[last]);
-		p_index = partition(median, first, last);
-		if (p_index == half)
+		swap(&median->[median->size / 2], &median->array[right]);
+		p_index = partition(median, left, right);
+		if (p_index == select)
 		{
 			median->num2 = median->array[p_index];
 			if (median->num1 != -1)
 				return ;
 		}
-		else if (p_index == half - 1)
+		else if (p_index == select - 1)
 		{
 			median->num1 = median->array[p_index];
 			if (median->num2 != -1)
 				return ;
 		}	
-		if (p_index >= half)
-				return (median_correct(median, first, p_index - 1, half));
+		if (p_index >= select)
+				return (median_correct(median, left, p_index - 1, select));
 		else
-				return (median_correct(median, first, p_index + 1, half));
+				return (median_correct(median, left, p_index + 1, select));
 	}
 }
 
