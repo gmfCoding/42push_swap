@@ -60,6 +60,6 @@ int	main(int argc, char **argv)
 	t_sort	*sort;
 
 	sort = initialise(argc, argv);
-	bubble_sort(sort);
+	helm_sort(sort);
 	stn_print(sort);
 }
