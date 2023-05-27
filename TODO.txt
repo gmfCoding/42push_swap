@@ -1,0 +1,18 @@
+Stages:
+1.0: push all integer larger than M into (B)
+1.1: calculate the new M for later use 
+2.0: push from largest to smallest from (B) into (A)
+REPEAT
+
+
+Although my logic follows through for needing to find the largest/smallest numbers at each n/4
+It seems to be quite the difficult challenge, the easiest way would be to order the list in a "simulation"
+but that feels kinda icky.
+
+Finding the median is also a very similar problem.
+
+The other thing we could try for stage 1
+
+
+
+
