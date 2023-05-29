@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:19:55 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/25 11:59:24 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/29 14:38:15 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 typedef struct s_sort	t_sort;
 
+typedef void			(*t_opfunc)(t_sort *sort);
+
 struct s_sort
 {
 	t_stack	*a;
@@ -23,9 +25,7 @@ struct s_sort
 	int		op_counter;
 };
 
-typedef void (*t_opfunc)(t_sort *);
-
-int	is_sorted(t_sort *sort);
+int		is_sorted(t_sort *sort);
 
 void	bubble_sort(t_sort *sort);
 void	helm_sort(t_sort *sort);

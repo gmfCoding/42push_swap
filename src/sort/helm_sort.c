@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:24:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/26 19:28:54 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/29 14:26:06 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
@@ -17,20 +17,20 @@
  * needed to bring the largest element to the top of the stack
  * Reverse rotations are values < 0
  */
-static int	rotate_largest(t_stack *stack, t_node *next, int upper, int forwards)
+static int	rotate_largest(t_stack *stack, t_node *next, int max, int forwards)
 {
-	int		max;
+	int		curr;
 	int		rotations;
 	int		rotated;
 
-	max = INT_MIN;
+	curr = INT_MIN;
 	rotations = 0;
 	rotated = 0;
 	while (next)
 	{
-		if (next->value > max && next->value <= upper)
+		if (next->value > curr && next->value <= max)
 		{
-			max = next->value;
+			curr = next->value;
 			rotations = rotated;
 		}
 		if (forwards)
@@ -40,7 +40,7 @@ static int	rotate_largest(t_stack *stack, t_node *next, int upper, int forwards)
 		rotated += 1 + ((forwards == 0) * -2);
 	}
 	if (rotations > (stack->count / 2))
-		return (rotate_largest(stack, stack->tail, upper, 0));
+		return (rotate_largest(stack, stack->tail, max, 0));
 	return (rotations);
 }
 
@@ -73,9 +73,9 @@ static int	rotate_largest(t_stack *stack, t_node *next, int upper, int forwards)
 }
 */
 
-void push_back(t_sort *sort)
+void	push_back(t_sort *sort)
 {
-	int rotations;
+	int	rotations;
 
 	while (sort->b->count > 0)
 	{
@@ -86,7 +86,7 @@ void push_back(t_sort *sort)
 				op_rrb(sort);
 			else
 				op_rb(sort);
-			rotations  += ((rotations < 0) - (rotations > 0));
+			rotations += ((rotations < 0) - (rotations > 0));
 		}
 		op_pa(sort);
 	}
@@ -98,7 +98,7 @@ int	get_smallest(t_stack *stack, int min)
 	t_node	*next;
 	int		cand;
 
-	cand = INT_MAX:
+	cand = INT_MAX;
 	next = stack->a->head;
 	while (next)
 	{
@@ -116,12 +116,12 @@ int	get_smallest(t_stack *stack, int min)
  * Move the 'n/b' largest integers into 'B'
  * The move from stack 'B' move the largest back into 'A'
  */
-void helm_sort(t_sort *sort)
+void	helm_sort(t_sort *sort)
 {
-	const int quatre = sort->a->count / 4;
-	int	pushed;
-	int	rotations;
-	int min;
+	const int	quatre = sort->a->count / 4;
+	int			pushed;
+	int			rotations;
+	int			min;
 
 	pushed = 0;
 	min = INT_MAX;
@@ -139,6 +139,6 @@ void helm_sort(t_sort *sort)
 		}
 		pushed = 0;
 		min = find_smallest(sort->b) - 1;
-		push_back(sort);	
+		push_back(sort);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:55:27 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/24 16:59:02 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/29 14:26:25 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -16,6 +16,7 @@ void	st_swap(t_stack	*s)
 {
 	int	first;
 	int	second;
+
 	if (!s->head || !s->head->next)
 		return ;
 	first = st_pop(s);

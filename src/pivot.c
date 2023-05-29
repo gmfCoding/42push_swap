@@ -1,17 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pivot.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/29 14:08:56 by clovell           #+#    #+#             */
+/*   Updated: 2023/05/29 14:28:13 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 typedef struct s_median
 {
 	int	*array;
-	int size;
-	int median;
-	int num1;
-	int num2;
-	int answer;
-} t_median;
+	int	size;
+	int	median;
+	int	num1;
+	int	num2;
+	int	answer;
+}	t_median;
 
 void	swap(int *a, int *b)
 {
-	int temp;
+	int	temp;
 
 	temp = *b;
 	*b = *a;
@@ -20,7 +31,7 @@ void	swap(int *a, int *b)
 
 static int	partition(t_median *median, int left, int right)
 {
-	const int val = median->array[right];
+	const int	val = median->array[right];
 	int			i;
 	int			j;
 
@@ -41,7 +52,7 @@ static int	partition(t_median *median, int left, int right)
 
 static void	median_correct(t_median *median, int left, int right, int select)
 {
-	int p_index;
+	int	p_index;
 
 	if (left < right)
 	{
@@ -60,9 +71,9 @@ static void	median_correct(t_median *median, int left, int right, int select)
 				return ;
 		}	
 		if (p_index >= select)
-				return (median_correct(median, left, p_index - 1, select));
+			return (median_correct(median, left, p_index - 1, select));
 		else
-				return (median_correct(median, left, p_index + 1, select));
+			return (median_correct(median, left, p_index + 1, select));
 	}
 }
 
@@ -74,6 +85,6 @@ int	median(t_median *median)
 	if (median->size % 2 == 0)
 		median->answer = (median->a + median->b) / 2;
 	else
-		median->answer =  median->num2;
+		median->answer = median->num2;
 	return (median->answer);
 }

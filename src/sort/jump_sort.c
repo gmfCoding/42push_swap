@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:36:50 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/25 13:15:27 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/29 14:10:43 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "sort.h"
@@ -15,17 +15,17 @@
  * RRS: Reverse Rotate Stack
  * POS: Push to Other Stack
  */
-# define RS 0
-# define RRS 1
-# define POS 3
-# ifndef JS_STACK_SIZE
+#define RS 0
+#define RRS 1
+#define POS 3
+#ifndef JS_STACK_SIZE
 # define JS_STACK_SIZE 100
-# endif
+#endif
 
 void	jump_sort(t_sort *sort)
 {
-	t_node	*start;
-	int		moved;
+	t_node			*start;
+	int				moved;
 	const t_opfunc	*ops = {op_rb, op_rrb};
 
 	start = sort->a->head;
@@ -38,7 +38,8 @@ void	jump_sort(t_sort *sort)
 	sort_stack(sort, sort->b, ops);
 }
 
-/* Finds the amounto rotations need to bring the smallest element to the top of the stack
+/* Finds the amount of rotations needed to bring 
+ * the smallest element to the top of the stack
  * Reverse rotations are values < 0
  */
 static int	rotate_smallest(t_stack *stack, t_node *next, int forwards)
@@ -69,9 +70,9 @@ static int	rotate_smallest(t_stack *stack, t_node *next, int forwards)
 	return (rotations);
 }
 
-static void sort_stack(t_sort *sort, t_stack *stack, t_opfunc *op[3])
+static void	sort_stack(t_sort *sort, t_stack *stack, t_opfunc *op[3])
 {
-	int rotations;
+	int	rotations;
 
 	while (stack->count > 0)
 	{
