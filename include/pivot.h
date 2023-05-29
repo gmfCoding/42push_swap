@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   verify.c                                           :+:      :+:    :+:   */
+/*   pivot.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/29 14:26:35 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/29 18:51:18 by clovell          ###   ########.fr       */
+/*   Created: 2023/05/29 15:10:57 by clovell           #+#    #+#             */
+/*   Updated: 2023/05/29 18:04:34 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sort.h"
-#include "stack.h"
+#ifndef PIVOT_H
+# define PIVOT_H
+# include "stack.h"
 
-int	is_sorted(t_sort *sort)
+typedef struct s_median
 {
-	t_node	*next;
-	int		prev;
+	int	*array;
+	int	size;
+	int	median;
+	int	num1;
+	int	num2;
+	int	answer;
+}	t_median;
 
-	if (sort->b->count != 0)
-		return (0);
-	next = sort->a->head;
-	prev = next->value;
-	next = next->next;
-	while (next)
-	{
-		if (next->value > prev)
-			return (0);
-		prev = next->value;
-		next = next->next;
-	}
-	return (1);
-}
+int	get_smallest(t_median *median, int kth);
+t_median *create_median(t_stack *stack);
+
+int			median(t_median *median);
+t_median	*median_from_stack(t_stack *stack);
+#endif

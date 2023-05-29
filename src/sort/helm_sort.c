@@ -6,17 +6,18 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:24:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/29 14:26:06 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/29 18:47:16 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
 #include "sort.h"
 #include "stack.h"
+#include "pivot.h"
 
 /* Finds the amount of rotations
  * needed to bring the largest element to the top of the stack
  * Reverse rotations are values < 0
- */
+
 static int	rotate_largest(t_stack *stack, t_node *next, int max, int forwards)
 {
 	int		curr;
@@ -43,9 +44,8 @@ static int	rotate_largest(t_stack *stack, t_node *next, int max, int forwards)
 		return (rotate_largest(stack, stack->tail, max, 0));
 	return (rotations);
 }
-
-/*
- * static int rotate_smallest(t_stack *stack, t_node *next, int forwards)
+*/
+static int rotate_smallest(t_stack *stack, t_node *next, int forwards)
 {
 	int	min;
 	int rotations;
@@ -71,7 +71,6 @@ static int	rotate_largest(t_stack *stack, t_node *next, int max, int forwards)
 		return (rotate_smallest(stack, stack->tail, 0));
 	return (rotations);
 }
-*/
 
 void	push_back(t_sort *sort)
 {
@@ -79,7 +78,7 @@ void	push_back(t_sort *sort)
 
 	while (sort->b->count > 0)
 	{
-		rotations = rotate_largest(sort->b, sort->b->head, INT_MAX, 1);
+		rotations = rotate_smallest(sort->b, sort->b->head, 1);
 		while (rotations != 0)
 		{
 			if (rotations < 0)
@@ -92,14 +91,14 @@ void	push_back(t_sort *sort)
 	}
 }
 
-/* Finds the smallest value in 'stack' that is larger than min. */
+/* Finds the smallest value in 'stack' that is larger than min. 
 int	get_smallest(t_stack *stack, int min)
 {
 	t_node	*next;
 	int		cand;
 
 	cand = INT_MAX;
-	next = stack->a->head;
+	next = stack->head;
 	while (next)
 	{
 		if (next->value < cand & next->value > min)
@@ -107,7 +106,8 @@ int	get_smallest(t_stack *stack, int min)
 		next = next->next;
 	}
 	return (cand);
-}
+}*/
+void	stn_print(t_sort *sort);
 
 /* Helm sort:
  * Sort stack 'A' using the following approach:
@@ -120,25 +120,40 @@ void	helm_sort(t_sort *sort)
 {
 	const int	quatre = sort->a->count / 4;
 	int			pushed;
-	int			rotations;
 	int			min;
+	int			max;
+	int			rotations;
 
+	t_median	*med;
+	int			place;
+
+	rotations = 0;
+	place = quatre;
+	med = create_median(sort->a);
 	pushed = 0;
-	min = INT_MAX;
+	min = get_smallest(med, quatre);
+	max = INT_MIN;
 	while (!is_sorted(sort))
 	{
-		while (pushed < quatre && sort->a->count > 0)
+		while (rotations < sort->a->count && sort->a->count > 0)
 		{
-			if (sort->a->value < min)
+			if (sort->a->head->value < min && sort->a->head->value >= max)
 			{
+				//stn_print(sort);
 				op_pb(sort);
 				pushed++;
 			}
 			else
+			{
 				op_ra(sort);
+				rotations++;
+			}
 		}
+		rotations = 0;
 		pushed = 0;
-		min = find_smallest(sort->b) - 1;
+		place += quatre;
+		max = min;
+		min = get_smallest(med, place) + 1;
 		push_back(sort);
 	}
 }
