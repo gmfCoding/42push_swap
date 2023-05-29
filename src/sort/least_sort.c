@@ -6,10 +6,10 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:17:08 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/26 15:23:00 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/29 14:09:26 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+/*
 typedef struct s_range t_range;
 
 struct s_range
@@ -47,4 +47,4 @@ t_range	find_range(t_stack *stack, int counted, int maxmin)
 void	least_sort(t_sort *sort)
 {
 		
-}
+}*/

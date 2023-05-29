@@ -6,14 +6,14 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:45:11 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/24 17:57:40 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/29 14:28:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "sort.h"
 #include "ft_printf.h"
 #include <limits.h>
 
-int find_smallest(t_stack *stack)
+int	find_smallest(t_stack *stack)
 {
 	t_node	*node;
 	int		min;
@@ -38,7 +38,7 @@ int find_smallest(t_stack *stack)
 
 void	bubble_sort(t_sort *sort)
 {
-	int rotations;
+	int	rotations;
 	int	current;
 
 	while (sort->a->head)
@@ -48,7 +48,6 @@ void	bubble_sort(t_sort *sort)
 		while (current < rotations)
 		{
 			op_ra(sort);
-			//stn_print(sort);
 			current++;
 		}
 		op_pb(sort);
