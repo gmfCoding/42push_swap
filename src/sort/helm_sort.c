@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:24:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/29 18:47:16 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/30 16:22:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
@@ -120,8 +120,8 @@ void	helm_sort(t_sort *sort)
 {
 	const int	quatre = sort->a->count / 4;
 	int			pushed;
-	int			min;
 	int			max;
+	int			min;
 	int			rotations;
 
 	t_median	*med;
@@ -131,13 +131,13 @@ void	helm_sort(t_sort *sort)
 	place = quatre;
 	med = create_median(sort->a);
 	pushed = 0;
-	min = get_smallest(med, quatre);
-	max = INT_MIN;
+	max = get_smallest(med, quatre);
+	min = INT_MIN;
 	while (!is_sorted(sort))
 	{
 		while (rotations < sort->a->count && sort->a->count > 0)
 		{
-			if (sort->a->head->value < min && sort->a->head->value >= max)
+			if (sort->a->head->value <= max && sort->a->head->value >= min)
 			{
 				//stn_print(sort);
 				op_pb(sort);
@@ -152,8 +152,8 @@ void	helm_sort(t_sort *sort)
 		rotations = 0;
 		pushed = 0;
 		place += quatre;
-		max = min;
-		min = get_smallest(med, place) + 1;
+		min = max;
+		max = get_smallest(med, place) + 1;
 		push_back(sort);
 	}
 }
