@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:49:24 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/24 16:58:41 by clovell          ###   ########.fr       */
+/*   Updated: 2023/05/30 13:48:25 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@
 
 void	st_rev_rotate(t_stack *s)
 {
-	t_node	*node;
+	t_node	*move;
+	t_node	**head;
+	t_node	**tail;
 
-	node = s->tail;
-	if (!node->prev)
-		return ;
-	node->prev->next = NULL;
-	node->prev = NULL;
-	node->next = s->head;
-	s->head->prev = node;
-	s->head = node;
+	head = &s->head;	
+	tail = &s->tail;
+	move = *tail;
+	(*tail) = (*tail)->prev;
+	(*tail)->next = NULL;
+	(*head)->prev = move;
+	(*head) = move;
+	move->prev = NULL;
+	move->next = *head;
 }
 
 void	op_rra(t_sort *sort)

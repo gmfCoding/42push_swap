@@ -53,7 +53,7 @@ int	get_smallest(t_median *median, int kth)
 {
 	if (kth < 0)
 		kth = 0;
-	if (kth >= median->size)
+	if (kth > median->size)
 		kth = median->size - 1;
 	return (median->array[kth]);
 }
