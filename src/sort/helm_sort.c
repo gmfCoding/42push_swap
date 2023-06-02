@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:24:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/30 16:22:44 by clovell          ###   ########.fr       */
+/*   Updated: 2023/06/01 14:17:00 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
@@ -139,7 +139,6 @@ void	helm_sort(t_sort *sort)
 		{
 			if (sort->a->head->value <= max && sort->a->head->value >= min)
 			{
-				//stn_print(sort);
 				op_pb(sort);
 				pushed++;
 			}
