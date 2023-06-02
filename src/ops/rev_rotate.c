@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:49:24 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/30 13:48:25 by clovell          ###   ########.fr       */
+/*   Updated: 2023/06/02 18:54:19 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	st_rev_rotate(t_stack *s)
 	(*tail) = (*tail)->prev;
 	(*tail)->next = NULL;
 	(*head)->prev = move;
-	(*head) = move;
 	move->prev = NULL;
 	move->next = *head;
+	(*head) = move;
 }
 
 void	op_rra(t_sort *sort)
@@ -40,7 +40,7 @@ void	op_rra(t_sort *sort)
 
 void	op_rrb(t_sort *sort)
 {
-	write_op("rrb");
+	write_op("rrb;
 	st_rev_rotate(sort->b);
 	sort->op_counter++;
 }
