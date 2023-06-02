@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:26:35 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/29 18:51:18 by clovell          ###   ########.fr       */
+/*   Updated: 2023/06/02 17:56:35 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_sorted(t_sort *sort)
 	next = next->next;
 	while (next)
 	{
-		if (next->value > prev)
+		if (next->value < prev)
 			return (0);
 		prev = next->value;
 		next = next->next;

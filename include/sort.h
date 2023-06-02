@@ -33,20 +33,20 @@ void	helm_sort(t_sort *sort);
 void	write_op(char *op);
 
 void	st_rev_rotate(t_stack *s);
-void	op_rra(t_sort *sort);
-void	op_rrb(t_sort *sort);
-void	op_rrr(t_sort *sort);
+int		op_rra(t_sort *sort);
+int		op_rrb(t_sort *sort);
+int		op_rrr(t_sort *sort);
 
 void	st_rotate(t_stack *s);
-void	op_ra(t_sort *sort);
-void	op_rb(t_sort *sort);
-void	op_rr(t_sort *sort);
+int		op_ra(t_sort *sort);
+int		op_rb(t_sort *sort);
+int		op_rr(t_sort *sort);
 
 void	st_swap(t_stack	*s);
-void	op_sa(t_sort *sort);
-void	op_sb(t_sort *sort);
-void	op_ss(t_sort *sort);
+int		op_sa(t_sort *sort);
+int		op_sb(t_sort *sort);
+int		op_ss(t_sort *sort);
 
-void	op_pa(t_sort *sort);
-void	op_pb(t_sort *sort);
+int		op_pa(t_sort *sort);
+int		op_pb(t_sort *sort);
 #endif
