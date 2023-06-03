@@ -38,4 +38,6 @@ t_stack	*st_new(char *name);
 void	st_push(t_stack *stack, int value);
 int		st_pop(t_stack *stack);
 
+void	st_delete(t_stack *stack);
+
 #endif

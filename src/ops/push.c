@@ -10,13 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "sort.h"
+#include <stdio.h> // WARNING
 
 int	op_pa(t_sort *sort)
 {
 	int	value;
 
-	if (sort->a->count == 0)
+	if (sort->b->count == 0)
 		return (0);
+#ifdef DEBUG
+	printf("%p:", sort->b->head) ;// WARNIN
+#endif
 	write_op("pa");
 	value = st_pop(sort->b);
 	st_push(sort->a, value);
@@ -28,7 +32,7 @@ int	op_pb(t_sort *sort)
 {
 	int	value;
 
-	if (sort->b->count == 0)
+	if (sort->a->count == 0)
 		return (0);
 	write_op("pb");
 	value = st_pop(sort->a);
