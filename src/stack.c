@@ -22,6 +22,20 @@ t_stack	*st_new(char *name)
 	return (stack);
 }
 
+void	st_delete(t_stack *stack)
+{
+	t_node *next;
+	t_node *tmp;
+	next = stack->head;
+	while (next)
+	{
+		tmp = next->next;
+		free(next);
+		next = tmp;
+	}
+	free(stack);
+}
+
 void	st_push(t_stack *stack, int value)
 {
 	t_node	*node;
@@ -46,6 +60,8 @@ int	st_pop(t_stack *stack)
 	pop = stack->head;
 	if (pop->next)
 		pop->next->prev = NULL;
+	else
+		stack->tail = NULL;
 	stack->head = pop->next;
 	value = pop->value;
 	free(pop);
