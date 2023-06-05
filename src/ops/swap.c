@@ -25,24 +25,34 @@ void	st_swap(t_stack	*s)
 	st_push(s, second);
 }
 
-void	op_sa(t_sort *sort)
+int	op_sa(t_sort *sort)
 {
+	if (sort->a->count <= 0)
+			return (0);
 	write_op("sa");
 	st_swap(sort->a);
 	sort->op_counter++;
+	return (1);
 }
 
-void	op_sb(t_sort *sort)
+int	op_sb(t_sort *sort)
 {
+	if (sort->b->count <= 0)
+			return (0);
 	write_op("sb");
 	st_swap(sort->b);
 	sort->op_counter++;
+	return (1);
 }
 
-void	op_ss(t_sort *sort)
+int	op_ss(t_sort *sort)
 {
-	write_op("ss (sa, sb)");
+	
+	if (sort->a->count <= 0 || sort->b->count <= 0)
+			return (0);
+	write_op("ss");
 	st_swap(sort->a);
 	st_swap(sort->b);
 	sort->op_counter++;
+	return (1);
 }

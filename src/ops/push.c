@@ -10,23 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "sort.h"
+#include <stdio.h> // WARNING
 
-void	op_pa(t_sort *sort)
+int	op_pa(t_sort *sort)
 {
 	int	value;
 
+	if (sort->b->count == 0)
+		return (0);
+#ifdef DEBUG
+	printf("%p:", sort->b->head) ;// WARNIN
+#endif
 	write_op("pa");
 	value = st_pop(sort->b);
 	st_push(sort->a, value);
 	sort->op_counter++;
+	return (1);
 }
 
-void	op_pb(t_sort *sort)
+int	op_pb(t_sort *sort)
 {
 	int	value;
 
+	if (sort->a->count == 0)
+		return (0);
 	write_op("pb");
 	value = st_pop(sort->a);
 	st_push(sort->b, value);
 	sort->op_counter++;
+	return (1);
 }

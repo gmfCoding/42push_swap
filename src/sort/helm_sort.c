@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
+#include <stdlib.h>
 #include "sort.h"
 #include "stack.h"
 #include "pivot.h"
@@ -135,6 +136,7 @@ void	helm_sort(t_sort *sort)
 	min = INT_MIN;
 	while (!is_sorted(sort))
 	{
+		stn_print(sort);
 		while (rotations < sort->a->count && sort->a->count > 0)
 		{
 			if (sort->a->head->value <= max && sort->a->head->value >= min)
@@ -155,4 +157,6 @@ void	helm_sort(t_sort *sort)
 		max = get_smallest(med, place) + 1;
 		push_back(sort);
 	}
+	free(med->array);
+	free(med);
 }
