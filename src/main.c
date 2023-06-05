@@ -9,6 +9,8 @@
 /*   Updated: 2023/05/24 17:08:23 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdlib.h>
+
 #include "libft.h"
 #include "ft_printf.h"
 #include "sort.h"
@@ -54,12 +56,16 @@ t_sort	*initialise(int argc, char **argv)
 	parse(sort, argc, argv);
 	return (sort);
 }
-
+#include <stdio.h>
+#include <unistd.h> // WARNING
 int	main(int argc, char **argv)
 {
 	t_sort	*sort;
-
+	setbuf(stdout, NULL); // WARNING
 	sort = initialise(argc, argv);
 	helm_sort(sort);
 	stn_print(sort);
+	st_delete(sort->a);
+	st_delete(sort->b);
+	free(sort);
 }
