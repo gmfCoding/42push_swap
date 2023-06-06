@@ -6,13 +6,14 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:24:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/06/05 19:18:56 by clovell          ###   ########.fr       */
+/*   Updated: 2023/06/06 15:48:36 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
 #include "sort.h"
 #include "stack.h"
 #include "pivot.h"
+#include "util.h"
 
 /* Finds the amount of rotations
  * needed to bring the largest element to the top of the stack
@@ -137,7 +138,7 @@ int	get_smallest(t_stack *stack, int min)
 void	stn_print(t_sort *sort);
 
 
-#include <unistd.h>
+#include <unistd.h> // BAD INCLUDE
 
 
 /* Helm sort:
@@ -149,7 +150,7 @@ void	stn_print(t_sort *sort);
  */
 void	helm_sort(t_sort *sort)
 {
-	const int	quatre = (sort->a->count / 4) + 1;
+	const int	quatre = (sort->a->count / 4) + (sort->a->count < 4);
 	int			pushed;
 	int			max;
 	int			min;
@@ -165,10 +166,10 @@ void	helm_sort(t_sort *sort)
 	{
 		rotations = 0;
 		pushed = 0;
-		max = get_smallest(med, place);
+		max = get_smallest(med, place) + 1;
 		while (rotations < sort->a->count && sort->a->count > 0)
 		{
-			if (sort->a->head->value <= max && sort->a->head->value >= min)
+			if (sort->a->head->value < max && sort->a->head->value >= min)
 			{
 				op_pb(sort);
 				pushed++;
@@ -190,6 +191,6 @@ void	helm_sort(t_sort *sort)
 		}
 		//stn_print(sort);
 		place += quatre;
-		sleep(4); // BAD FUNCTION, DO NOT USE.
+		sleep(1); // BAD FUNCTION, DO NOT USE.
 	}
 }
