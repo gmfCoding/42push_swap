@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:24:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/06/06 15:48:36 by clovell          ###   ########.fr       */
+/*   Updated: 2023/06/07 12:33:09 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
@@ -180,16 +180,16 @@ void	helm_sort(t_sort *sort)
 				rotations++;
 			}
 		}
-		//stn_print(sort);
+		stn_print(sort);
 		min = max + 1;
 		push_back(sort);
-		//n_print(sort);
+		stn_print(sort);
 		while (pushed > 0)
 		{
 			op_rra(sort);
 			pushed--;
 		}
-		//stn_print(sort);
+		stn_print(sort);
 		place += quatre;
 		sleep(1); // BAD FUNCTION, DO NOT USE.
 	}
