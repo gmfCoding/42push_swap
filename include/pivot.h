@@ -29,4 +29,5 @@ t_median *create_median(t_stack *stack);
 
 int			median(t_median *median);
 t_median	*median_from_stack(t_stack *stack);
+void		med_delete(t_median **median);
 #endif

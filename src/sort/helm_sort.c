@@ -70,7 +70,7 @@ static int rotate_largest(t_stack *stack, t_node *next, int forwards)
 		rotated += 1 + ((forwards == 0) * -2);
 	}
 	if (rotations > (stack->count / 2))
-		return (rotate_largest(stack, stack->tail, 0));
+		return (rotate_largest(stack, stack->tail, 0) - 1);
 	return (rotations);
 }/*
 static int rotate_smallest(t_stack *stack, t_node *next, int forwards)
@@ -139,7 +139,7 @@ void	stn_print(t_sort *sort);
 
 
 #include <unistd.h> // BAD INCLUDE
-
+#include <stdio.h> // BAD
 
 /* Helm sort:
  * Sort stack 'A' using the following approach:
@@ -162,14 +162,16 @@ void	helm_sort(t_sort *sort)
 	place = quatre;
 	med = create_median(sort->a);
 	min = INT_MIN;
+	printf("size:%d quatre: %d ", sort->a->count, quatre); // BAD
 	while (!is_sorted(sort))
 	{
 		rotations = 0;
 		pushed = 0;
-		max = get_smallest(med, place) + 1;
+		max = get_smallest(med, place);
+		printf("min:%d max:%d place:%d\n", min, max, place); // BAD
 		while (rotations < sort->a->count && sort->a->count > 0)
 		{
-			if (sort->a->head->value < max && sort->a->head->value >= min)
+			if (sort->a->head->value <= max && sort->a->head->value >= min)
 			{
 				op_pb(sort);
 				pushed++;
@@ -180,17 +182,26 @@ void	helm_sort(t_sort *sort)
 				rotations++;
 			}
 		}
+		printf("pre_push_back:\n");
 		stn_print(sort);
-		min = max + 1;
+		min = get_smallest(med, place + 1);
 		push_back(sort);
+		printf("post_push_back:\n");	
 		stn_print(sort);
+		place += pushed;
+		//if (place - quatre > quatre * 3)
+			//	break ;
 		while (pushed > 0)
 		{
-			op_rra(sort);
+			op_ra(sort);
 			pushed--;
 		}
+		printf("post_rotate:\n");
 		stn_print(sort);
-		place += quatre;
-		sleep(1); // BAD FUNCTION, DO NOT USE.
+		usleep(1000000); // BAD FUNCTION, DO NOT USE.
 	}
+	printf("Done\n\n!");
+	if (is_sorted(sort))
+		printf("Successfull sorted\n\n!");
+	med_delete(&med);
 }
