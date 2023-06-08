@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "pivot.h"
 #include "libft.h"
 
@@ -56,4 +57,11 @@ int	get_smallest(t_median *median, int kth)
 	if (kth >= median->size)
 		kth = median->size - 1;
 	return (median->array[kth]);
+}
+
+void	med_delete(t_median **median)
+{
+	free((*median)->array);
+	free(*median);
+	*median = NULL;
 }
