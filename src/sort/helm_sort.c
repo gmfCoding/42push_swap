@@ -1,19 +1,31 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   helm_sort.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 15:24:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/06/07 12:33:09 by clovell          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-#include <limits.h>
-#include "sort.h"
-#include "stack.h"
-#include "pivot.h"
-#include "util.h"
+/*
+static int rotate_smallest(t_stack *stack, t_node *next, int forwards)
+{
+	int	min;
+	int rotations;
+	int rotated;
+
+	min = INT_MAX;
+	rotations = 0;
+	rotated = 0;
+	while (next)
+	{
+		if (next->value < min)
+		{
+			min = next->value;
+			rotations = rotated;
+		}
+		if (forwards)
+			next = next->next;
+		else
+			next = next->prev;
+		rotated += 1 + ((forwards == 0) * -2);
+	}
+	if (rotations > (stack->count / 2))
+		return (rotate_smallest(stack, stack->tail, 0));
+	return (rotations);
+}
+*/
 
 /* Finds the amount of rotations
  * needed to bring the largest element to the top of the stack
@@ -47,6 +59,23 @@ static int	rotate_largest(t_stack *stack, t_node *next, int max, int forwards)
 	return (rotations);
 }
 */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helm_sort.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/26 15:24:28 by clovell           #+#    #+#             */
+/*   Updated: 2023/06/12 17:44:26 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include <limits.h>
+#include "sort.h"
+#include "stack.h"
+#include "pivot.h"
+#include "util.h"
+
 static int rotate_largest(t_stack *stack, t_node *next, int forwards)
 {
 	int	min;
@@ -72,34 +101,8 @@ static int rotate_largest(t_stack *stack, t_node *next, int forwards)
 	if (rotations > (stack->count / 2))
 		return (rotate_largest(stack, stack->tail, 0) - 1);
 	return (rotations);
-}/*
-static int rotate_smallest(t_stack *stack, t_node *next, int forwards)
-{
-	int	min;
-	int rotations;
-	int rotated;
-
-	min = INT_MAX;
-	rotations = 0;
-	rotated = 0;
-	while (next)
-	{
-		if (next->value < min)
-		{
-			min = next->value;
-			rotations = rotated;
-		}
-		if (forwards)
-			next = next->next;
-		else
-			next = next->prev;
-		rotated += 1 + ((forwards == 0) * -2);
-	}
-	if (rotations > (stack->count / 2))
-		return (rotate_smallest(stack, stack->tail, 0));
-	return (rotations);
 }
-*/
+
 void	push_back(t_sort *sort)
 {
 	int	rotations;
@@ -138,6 +141,29 @@ int	get_smallest(t_stack *stack, int min)
 void	stn_print(t_sort *sort);
 
 
+int	push_forward(t_sort *sort, int min, int max)
+{
+	int	rotations;
+	int pushed;
+
+	pushed = 0;
+	rotations = 0;
+	while (rotations < sort->a->count && sort->a->count > 0)
+	{
+		if (sort->a->head->value <= max && sort->a->head->value >= min)
+		{
+			op_pb(sort);
+			pushed++;
+		}
+		else
+		{
+			op_ra(sort);
+			rotations++;
+		}
+	}
+	return (pushed);
+}
+
 #include <unistd.h> // BAD INCLUDE
 #include <stdio.h> // BAD
 
@@ -148,9 +174,9 @@ void	stn_print(t_sort *sort);
  * Move the 'n/b' largest integers into 'B'
  * The move from stack 'B' move the largest back into 'A'
  */
-void	helm_sort(t_sort *sort)
+void	helm_sort(t_sort *sort, int cut)
 {
-	const int	quatre = (sort->a->count / 4) + (sort->a->count < 4);
+	const int	quatre = (sort->a->count / cut) + (sort->a->count < cut);
 	int			pushed;
 	int			max;
 	int			min;
@@ -168,25 +194,13 @@ void	helm_sort(t_sort *sort)
 		rotations = 0;
 		pushed = 0;
 		max = get_smallest(med, place);
-		printf("min:%d max:%d place:%d\n", min, max, place); // BAD
-		while (rotations < sort->a->count && sort->a->count > 0)
-		{
-			if (sort->a->head->value <= max && sort->a->head->value >= min)
-			{
-				op_pb(sort);
-				pushed++;
-			}
-			else
-			{
-				op_ra(sort);
-				rotations++;
-			}
-		}
-		printf("pre_push_back:\n");
+		//printf("min:%d max:%d place:%d\n", min, max, place); // BAD
+		pushed = push_forward(sort, min, max);
+		//printf("pre_push_back:\n");
 		stn_print(sort);
 		min = get_smallest(med, place + 1);
 		push_back(sort);
-		printf("post_push_back:\n");	
+		//printf("post_push_back:\n");	
 		stn_print(sort);
 		place += pushed;
 		//if (place - quatre > quatre * 3)
@@ -196,9 +210,9 @@ void	helm_sort(t_sort *sort)
 			op_ra(sort);
 			pushed--;
 		}
-		printf("post_rotate:\n");
+		//printf("post_rotate:\n");
 		stn_print(sort);
-		usleep(1000000); // BAD FUNCTION, DO NOT USE.
+		//usleep(1000000); // BAD FUNCTION, DO NOT USE.
 	}
 	printf("Done\n\n!");
 	if (is_sorted(sort))

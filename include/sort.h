@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:19:55 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/29 16:59:58 by clovell          ###   ########.fr       */
+/*   Updated: 2023/06/12 17:37:49 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ struct s_sort
 int		is_sorted(t_sort *sort);
 
 void	bubble_sort(t_sort *sort);
-void	helm_sort(t_sort *sort);
+void	helm_sort(t_sort *sort, int cut);
 
 void	write_op(char *op);
 

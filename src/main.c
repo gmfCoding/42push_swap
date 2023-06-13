@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:12:35 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/24 17:08:23 by clovell          ###   ########.fr       */
+/*   Updated: 2023/06/12 17:37:59 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -63,7 +63,7 @@ int	main(int argc, char **argv)
 	t_sort	*sort;
 	setbuf(stdout, NULL); // WARNING
 	sort = initialise(argc, argv);
-	helm_sort(sort);
+	helm_sort(sort, 8);
 	stn_print(sort);
 	st_delete(sort->a);
 	st_delete(sort->b);
