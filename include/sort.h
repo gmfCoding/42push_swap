@@ -29,6 +29,7 @@ int		is_sorted(t_sort *sort);
 
 void	bubble_sort(t_sort *sort);
 void	helm_sort(t_sort *sort);
+void decision_sort(t_sort *sort);
 
 void	write_op(char *op);
 

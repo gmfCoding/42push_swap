@@ -42,7 +42,7 @@ void	stn_print(t_sort *sort)
 	}
 	ft_printf("---------\n");
 	ft_printf("A\tB\n");
-	ft_printf("in %d operations.", sort->op_counter);
+	ft_printf("in %d operations.\n", sort->op_counter);
 }
 
 t_sort	*initialise(int argc, char **argv)
@@ -63,7 +63,8 @@ int	main(int argc, char **argv)
 	t_sort	*sort;
 	setbuf(stdout, NULL); // WARNING
 	sort = initialise(argc, argv);
-	helm_sort(sort);
+	//helm_sort(sort);
+	decision_sort(sort);
 	stn_print(sort);
 	st_delete(sort->a);
 	st_delete(sort->b);
