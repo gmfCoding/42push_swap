@@ -46,7 +46,7 @@ static int	rotate_largest(t_stack *stack, t_node *next, int max, int forwards)
 		return (rotate_largest(stack, stack->tail, max, 0));
 	return (rotations);
 }
-*/
+
 static int rotate_largest(t_stack *stack, t_node *next, int forwards)
 {
 	int	min;
@@ -72,7 +72,7 @@ static int rotate_largest(t_stack *stack, t_node *next, int forwards)
 	if (rotations > (stack->count / 2))
 		return (rotate_largest(stack, stack->tail, 0) - 1);
 	return (rotations);
-}/*
+}
 static int rotate_smallest(t_stack *stack, t_node *next, int forwards)
 {
 	int	min;
@@ -150,7 +150,7 @@ void	stn_print(t_sort *sort);
  */
 void	helm_sort(t_sort *sort)
 {
-	const int	quatre = (sort->a->count / 4) + (sort->a->count < 4);
+	const int	quatre = (sort->a->count / 8) + (sort->a->count < 8);
 	int			pushed;
 	int			max;
 	int			min;
@@ -198,7 +198,7 @@ void	helm_sort(t_sort *sort)
 		}
 		printf("post_rotate:\n");
 		stn_print(sort);
-		usleep(1000000); // BAD FUNCTION, DO NOT USE.
+		//usleep(1000000); // BAD FUNCTION, DO NOT USE.
 	}
 	printf("Done\n\n!");
 	if (is_sorted(sort))

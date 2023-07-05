@@ -59,6 +59,11 @@ int	get_smallest(t_median *median, int kth)
 	return (median->array[kth]);
 }
 
+int	get_largest(t_median *median)
+{
+	return (median->array[median->size - 1]);
+}
+
 void	med_delete(t_median **median)
 {
 	free((*median)->array);
