@@ -64,7 +64,8 @@ int	main(int argc, char **argv)
 	setbuf(stdout, NULL); // WARNING
 	sort = initialise(argc, argv);
 	//helm_sort(sort);
-	decision_sort(sort);
+	//decision_sort(sort);
+	tiny_sort(sort);
 	stn_print(sort);
 	st_delete(sort->a);
 	st_delete(sort->b);

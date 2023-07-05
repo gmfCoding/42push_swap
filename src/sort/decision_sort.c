@@ -71,6 +71,26 @@ t_rotinfo	decide_rotate(t_stack *stack, t_median *med, int value)
 	return ((t_rotinfo){1, {1, 0}, {first, second}});
 }
 
+static void	push_back3(t_sort *sort)
+{
+	int	rotations;
+
+	while (sort->b->count > 0)
+	{
+		rotations = rotate_largest(sort->b, sort->b->head, 1);
+		while (rotations != 0)
+		{
+			if (rotations < 0)
+				op_rrb(sort);
+			else
+				op_rb(sort);
+			rotations += ((rotations < 0) - (rotations > 0));
+		}
+		op_pa(sort);
+	}
+}
+
+/*
 static void	push_back(t_sort *sort)
 {
 	t_rotinfo info;
@@ -89,7 +109,7 @@ static void	push_back(t_sort *sort)
 		info.swaps--;
 	}
 }
-
+*/
 #include <stdio.h>
 
 
@@ -119,50 +139,32 @@ void decision_sort(t_sort *sort)
 	int			pushed;
 	int			max;
 	int			min;
-	int			rotations;
-
+	int			mode;
 	t_median	*med;
 	int			place;
 
 	place = quatre;
 	med = create_median(sort->a);
 	min = INT_MIN;
+	mode = 0;
 	printf("size:%d quatre: %d ", sort->a->count, quatre); // BAD
 	while (!is_sorted(sort))
 	{
-		rotations = 0;
-		pushed = 0;
 		max = get_smallest(med, place);
-		printf("min:%d max:%d place:%d\n", min, max, place); // BAD
-		while (rotations < sort->a->count && sort->a->count > 0)
-		{
-			if (sort->a->head->value <= max && sort->a->head->value >= min)
-			{
-				op_pb(sort);
-				pushed++;
-			}
-			else
-			{
-				op_ra(sort);
-				rotations++;
-			}
-		}
-		printf("pre_push_back:\n");
-		stn_print(sort);
+		push_to_b(sort, 0, min, max);
+		pushed = sort->b->count;
 		min = get_smallest(med, place + 1);
-		push_back(sort);
-		printf("post_push_back:\n");	
-		stn_print(sort);
+		push_back3(sort);
 		place += pushed;
-		//if (place - quatre > quatre * 3)
-			//	break ;
 		while (pushed > 0)
 		{
-			op_ra(sort);
+			if (0)
+				op_rra(sort);
+			else
+				op_ra(sort);
 			pushed--;
 		}
-		printf("post_rotate:\n");
-		stn_print(sort);
+		mode = !mode;
 		//usleep(1000000); // BAD FUNCTION, DO NOT USE.
 	}
 	printf("Done\n\n!");

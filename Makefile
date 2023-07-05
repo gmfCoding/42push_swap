@@ -1,4 +1,4 @@
-SRCSF =	main.c operations.c node.c stack.c input.c verify.c pivot.c sort/helm_sort.c sort/decision_sort.c median.c median_util.c util/cost.c $(addprefix ops/, push.c rev_rotate.c rotate.c swap.c)
+SRCSF =	main.c operations.c node.c stack.c input.c verify.c pivot.c sort/helm_sort.c sort/decision_sort.c sort/cost/cost_sort.c median.c median_util.c util/cost.c $(addprefix ops/, push.c rev_rotate.c rotate.c swap.c)
 
 OBJSF = $(patsubst %.c,%.o, $(SRCSF))
 
@@ -28,7 +28,7 @@ LIB-L = $(patsubst %,-L$(DIRLIB)%, $(dir $(LIBSF)))
 NAME = push_swap
 CC = cc
 
-WFLAGS = -Wall -Werror -Wextra
+#WFLAGS = -Wall -Werror -Wextra
 OFLAGS = $(DFLAGS) $(WFLAGS) $(LIB-I) -I$(DIRINC)
 CFLAGS = $(DFLAGS) $(LIB-L) $(LIB-l)
 
