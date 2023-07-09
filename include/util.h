@@ -16,14 +16,14 @@ int rotate_target(t_stack *stack, t_node *next, int target, int forwards);
 int rotate_smallest(t_stack *stack, t_node *next, int forwards);
 int rotate_largest(t_stack *stack, t_node *next, int forwards);
 
-constexpr int	min(int a, int b)
+int	min(int a, int b)
 {
 	if (a < b)
 		return (a);
 	return (b);
 }
 
-constexpr int	max(int a, int b)
+int	max(int a, int b)
 {
 	if (a > b)
 		return (a);

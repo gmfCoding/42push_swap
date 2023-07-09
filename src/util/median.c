@@ -50,6 +50,15 @@ t_median *create_median(t_stack *stack)
 	return (med);
 }
 
+int	get_largest(t_median *median, int kth)
+{
+	if (kth < 0)
+		kth = 0;
+	if (kth >= median->size)
+		kth = median->size - 1;
+	return (median->array[(median->size - kth) - 1]);
+}
+
 int	get_smallest(t_median *median, int kth)
 {
 	if (kth < 0)

@@ -16,6 +16,32 @@
 #include "util.h"
 #include "debug.h" //REMOVE
 
+typedef struct s_helm_sort t_hs;
+typedef struct s_helm_sort_sub t_hss;
+
+struct s_helm_sort_sub
+{
+	int max;
+	int min;
+	int place;
+};
+
+struct s_helm_sort
+{
+	int			quatre;
+	int			pushed;
+	int			reverse;
+	
+	// Mode forward and mode reverse
+	t_hss		mr;
+	t_hss		mf;
+	
+	int			rotations;
+
+	t_sort		*sort;
+	t_median	*med;
+};
+
 void	ext_op_rbn(t_sort *sort, int rotations)
 {
 	while (rotations != 0)
@@ -61,6 +87,72 @@ void	push_back(t_sort *sort)
 #include <unistd.h> // BAD INCLUDE
 #include <stdio.h> // BAD
 
+void helm_sort_reverse(t_hs *hs_ptr)
+{
+	t_hs hs;
+	int max;
+	int min;
+
+	hs = *hs_ptr;
+	hs.mr.min = get_largest(hs.med, hs.mr.place);
+	max = hs.mr.max;
+	min = hs.mr.min;
+	printf("PUSHING: %d to %d\n", hs.mr.min, hs.mr.max);
+	while (hs.rotations < hs.sort->a->count && hs.sort->a->count > 0)
+	{
+		if (hs.sort->a->head->value <= max && hs.sort->a->head->value >= min)
+		{
+			op_pb(hs.sort);
+			hs.pushed++;
+		}
+		else
+		{
+			op_rra(hs.sort);
+			hs.rotations++; // DO WE NEED THIS ANYMORE?
+		}
+	}
+	hs.mr.max = get_largest(hs.med, hs.mr.place + 1);
+	push_back(hs.sort);
+	hs.mr.place += hs.pushed;
+	printf("align!!\n");
+	while (hs.pushed != 0)
+	{
+		op_ra(hs.sort);
+		hs.pushed--;
+	}
+	*hs_ptr = hs; 
+}
+
+void helm_sort_forward(t_hs *hs_ptr)
+{
+	t_hs hs;
+	int min;
+	int max;
+
+	hs = *hs_ptr;
+	hs.mf.max = get_smallest(hs.med, hs.mf.place);
+	min = hs.mf.min;
+	max = hs.mf.max;
+	printf("PUSHING: %d to %d\n", hs.mf.min, hs.mf.max);
+	while (hs.rotations < hs.sort->a->count && hs.sort->a->count > 0)
+	{
+		if (hs.sort->a->head->value <= max && hs.sort->a->head->value >= min)
+		{
+			op_pb(hs.sort);
+			hs.pushed++;  // Do we need this for forward?
+		}
+		else
+		{
+			op_ra(hs.sort);
+			hs.rotations++; // Do we need this?
+		}
+	}
+	hs.mf.min = get_smallest(hs.med, hs.mf.place + 1);
+	push_back(hs.sort);
+	hs.mf.place += hs.pushed;
+	*hs_ptr = hs; 
+}
+
 /* Helm sort:
  * Sort stack 'A' using the following approach:
  * Let 'n' be the amount of elements in the stack
@@ -71,57 +163,26 @@ void	push_back(t_sort *sort)
 void	helm_sort(t_sort *sort, int cut)
 {
 	const int	quatre = (sort->a->count / cut) + (sort->a->count < cut);
-	int			pushed;
-	int			max;
-	int			min;
-	int			rotations;
+	t_hs		hs;
 
-	t_median	*med;
-	int			place;
-
-	place = quatre;
-	med = create_median(sort->a);
-	min = INT_MIN;
-	printf("size:%d quatre: %d ", sort->a->count, quatre); // BAD
+	hs.sort = sort;
+	hs.mr.place = quatre;
+	hs.mf.place = quatre;
+	hs.med = create_median(sort->a);
+	hs.mf.min = INT_MIN;
+	hs.mr.max = INT_MAX;
+	hs.reverse = 0;
 	while (!is_sorted(sort))
 	{
-		rotations = 0;
-		pushed = 0;
-		max = get_smallest(med, place);
-		printf("min:%d max:%d place:%d\n", min, max, place); // BAD
-		while (rotations < sort->a->count && sort->a->count > 0)
-		{
-			if (sort->a->head->value <= max && sort->a->head->value >= min)
-			{
-				op_pb(sort);
-				pushed++;
-			}
-			else
-			{
-				op_ra(sort);
-				rotations++;
-			}
-		}
-		printf("pre_push_back:\n");
-		stn_print(sort);
-		min = get_smallest(med, place + 1);
-		push_back(sort);
-		printf("post_push_back:\n");	
-		stn_print(sort);
-		place += pushed;
-		//if (place - quatre > quatre * 3)
-			//	break ;
-		while (pushed > 0)
-		{
-			op_ra(sort);
-			pushed--;
-		}
-		printf("post_rotate:\n");
-		stn_print(sort);
-		usleep(20000); // BAD FUNCTION, DO NOT USE.
+		hs.rotations = 0;
+		hs.pushed = 0;
+		if (!hs.reverse)
+			helm_sort_forward(&hs);
+		else
+			helm_sort_reverse(&hs);
+		hs.reverse = !hs.reverse;
 	}
-	//printf("Done\n\n!");
 	if (is_sorted(sort))
 		printf("Successfull sorted\n\n!");
-	med_delete(&med);
+	med_delete(&hs.med);
 }

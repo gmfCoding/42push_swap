@@ -29,6 +29,7 @@ int med_first_idx_lte(t_median *med, int value);
 int	median_prev(t_median *med, int curr);
 int	median_next(t_median *med, int curr);
 
+int	get_largest(t_median *median, int kth);
 int	get_smallest(t_median *median, int kth);
 t_median *create_median(t_stack *stack);
 
