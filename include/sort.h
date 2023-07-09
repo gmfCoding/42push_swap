@@ -28,7 +28,7 @@ struct s_sort
 int		is_sorted(t_sort *sort);
 
 void	bubble_sort(t_sort *sort);
-void	helm_sort(t_sort *sort);
+void	helm_sort(t_sort *sort, int cut);
 
 void	write_op(char *op);
 
