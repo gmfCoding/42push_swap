@@ -32,10 +32,14 @@ t_sort	*initialise(int argc, char **argv)
 #include <unistd.h> // WARNING
 int	main(int argc, char **argv)
 {
-	static int cut = 4;
+	static int cut = 1;
 	t_sort	*sort;
 	setbuf(stdout, NULL); // WARNING
 	sort = initialise(argc, argv);
+	if (sort->a->count > 40)
+		cut = 2;
+	if (sort->a->count > 70)
+		cut = 4;
 	if (sort->a->count > 250)
 		cut = 8;
 	helm_sort(sort, cut);
