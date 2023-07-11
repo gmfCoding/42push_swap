@@ -47,6 +47,8 @@ int	main(int argc, char **argv)
 	if (sort->a->count > 600)
 		cut = sort->a->count / 60;
 	helm_sort(sort, cut);
+	if (is_sorted(sort))
+		ft_printf("Successfull sorted in %d\n\n!", sort->op_counter); // REMOVE
 	med_delete(&sort->med);
 	st_delete(sort->a);
 	st_delete(sort->b);

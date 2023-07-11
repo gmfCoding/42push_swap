@@ -15,11 +15,14 @@
 
 int	st_ishead(t_node *node)
 {
+
+	// REMOVE IF UNUSED
 	return (node->prev == NULL);
 }
 
 int	st_istail(t_node *node)
 {
+	// REMOVEI IF UNUSED
 	return (node->next == NULL);
 }
 

@@ -1,6 +1,7 @@
-SRCSF =	main.c operations.c node.c stack.c input.c verify.c sort/helm_sort.c \
+SRCSF =	main.c operations.c node.c stack.c input.c verify.c \
 	   	$(addprefix util/, cost.c median.c median_util.c debug.c stats.c) \
-	   	$(addprefix ops/, push.c rev_rotate.c rotate.c swap.c)
+	   	$(addprefix sort/, helm_sort.c bubble_sort.c least_sort.c) \
+	   	$(addprefix ops/, push.c rev_rotate.c rotate.c swap.c extra.c)
 
 OBJSF = $(patsubst %.c,%.o, $(SRCSF))
 

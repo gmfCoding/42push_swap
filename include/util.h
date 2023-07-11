@@ -9,12 +9,7 @@
 /*   Updated: 2023/06/06 15:44:52 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-int    stat_largest(t_stack *stack, int max);
-int    stat_smallest(t_stack *stack, int min);
 
-int rotate_target(t_stack *stack, t_node *next, int target, int forwards);
-int rotate_smallest(t_stack *stack, t_node *next, int forwards);
-int rotate_largest(t_stack *stack, t_node *next, int forwards);
 
 int	min(int a, int b)
 {

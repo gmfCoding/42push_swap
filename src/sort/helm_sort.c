@@ -41,20 +41,9 @@ struct s_helm_sort
 	t_i64		p_max;
 	int			rotations;
 	t_sort		*sort;
-	t_median	*med;
 };
 
-void	ext_op_xn(t_sort *sort, t_opfunc op, t_opfunc rev, int amount)
-{
-	while (amount != 0)
-	{
-		if (amount < 0)
-			rev(sort);
-		else
-			op(sort);
-		amount += ((amount < 0) - (amount > 0));
-	}
-}
+
 
 
 /* Pushes from B to A (in a smart way)
@@ -115,9 +104,8 @@ void push_to_b(t_hs *hs, t_hm m, t_opfunc rot, int rev)
 		if (a->head->value <= m.max && a->head->value >= m.min)
 		{
 			op_pb(hs->sort);
-			if (m.max - m.min < 1000)
-				if (hs->sort->b->head->value > m.min + ((m.max - m.min) / 2))
-					op_rb(hs->sort);
+			if (hs->sort->b->head->value > m.min + ((m.max - m.min) / 2))
+				op_rb(hs->sort);
 			hs->pushed++; 
 		}
 		else
@@ -148,9 +136,9 @@ void	helm_sort_mode(t_hs *hs, t_hm *hm, int rev)
 		v2 = &hm->max;
 		op = op_ra;
 	}
-	*v1 = med(hs->med, hm->place);
+	*v1 = med(hs->sort->med, hm->place);
 	push_to_b(hs, *hm, op, rev);
-	*v2 = med(hs->med, hm->place + 1);
+	*v2 = med(hs->sort->med, hm->place + 1);
 	push_back(hs->sort);
 	hm->place += hs->pushed;
 }
@@ -164,17 +152,14 @@ void	helm_sort_mode(t_hs *hs, t_hm *hm, int rev)
  */
 void	helm_sort(t_sort *sort, int cut)
 {
-	const int	quatre = (sort->a->count / cut) + (sort->a->count < cut);
 	t_hs		hs;
 	int			final_rot;
 
 	hs.sort = sort;
-	hs.mr.place = quatre;
-	hs.mf.place = quatre;
-	hs.med = sort->med;
-	hs.mf.min = get_smallest(hs.med, 0) - 1;
-	hs.mf.max = get_smallest(hs.med, quatre) + 1;
-	hs.mr.max = get_largest(hs.med, 0) + 1;
+	hs.mr.place = (sort->a->count / cut) + (sort->a->count < cut);
+	hs.mf.place = hs.mr.place;
+	hs.mf.min = get_smallest(sort->med, 0) - 1;
+	hs.mr.max = get_largest(sort->med, 0) + 1;
 	hs.reverse = 0;
 	hs.p_max = INT_MAX;
 	while (cut > 0)
@@ -191,9 +176,6 @@ void	helm_sort(t_sort *sort, int cut)
 		hs.reverse = !hs.reverse;
 		cut--;
 	}
-//	op_pa(sort);
 	final_rot = rotate_target(sort->a, sort->a->head, sort->min, 1);
 	ext_op_xn(hs.sort, op_ra, op_rra, final_rot);
-	if (is_sorted(sort))
-		ft_printf("Successfull sorted in %d\n\n!", sort->op_counter); // REMOVE
 }
