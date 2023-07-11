@@ -69,7 +69,7 @@ fclean: libclean clean
 libclean_clean = $(dir $(shell find $(DIRLIB) -name "Makefile"))
 libclean:
 	@-echo "\n${GREEN}Cleaning Libraries: ${CYAN}$(basename $(libclean_clean))${NC}"
-	@-$(foreach dir,$(libclean_clean),echo "\n${GREEN}Cleaning: ${CYAN} $(dir) ${NC}";make -i --no-print-directory -C $(dir) clean;)
+	@-$(foreach dir,$(libclean_clean),echo "\n${GREEN}Cleaning: ${CYAN} $(dir) ${NC}";make -i --no-print-directory -C $(dir) fclean;)
 
 clean:
 	-rm -rf $(DIROBJ)
