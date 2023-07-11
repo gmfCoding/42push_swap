@@ -31,8 +31,9 @@ struct s_node
 	int		value;
 };
 
-int		st_ishead(t_node *node);
-int		st_istail(t_node *node);
+int		st_ishead(t_node *node); // REMOVE
+int		st_istail(t_node *node); // REMOVE
+								 
 t_node	*stn_new(int value);
 t_stack	*st_new(char *name);
 void	st_push(t_stack *stack, int value);

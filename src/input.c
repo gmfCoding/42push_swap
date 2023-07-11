@@ -15,7 +15,7 @@
 void	parse(t_sort *sort, int argc, char **argv)
 {
 	int	i;
-
+	// Implement string parsing
 	i = argc - 1;
 	while (i > 0)
 	{

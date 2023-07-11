@@ -1,4 +1,7 @@
-SRCSF =	main.c operations.c node.c stack.c input.c verify.c pivot.c sort/helm_sort.c median.c $(addprefix ops/, push.c rev_rotate.c rotate.c swap.c)
+SRCSF =	main.c operations.c node.c stack.c input.c verify.c \
+	   	$(addprefix util/, cost.c median.c median_util.c debug.c stats.c) \
+	   	$(addprefix sort/, helm_sort.c bubble_sort.c least_sort.c) \
+	   	$(addprefix ops/, push.c rev_rotate.c rotate.c swap.c extra.c)
 
 OBJSF = $(patsubst %.c,%.o, $(SRCSF))
 
@@ -66,7 +69,7 @@ fclean: libclean clean
 libclean_clean = $(dir $(shell find $(DIRLIB) -name "Makefile"))
 libclean:
 	@-echo "\n${GREEN}Cleaning Libraries: ${CYAN}$(basename $(libclean_clean))${NC}"
-	@-$(foreach dir,$(libclean_clean),echo "\n${GREEN}Cleaning: ${CYAN} $(dir) ${NC}";make -i --no-print-directory -C $(dir) clean;)
+	@-$(foreach dir,$(libclean_clean),echo "\n${GREEN}Cleaning: ${CYAN} $(dir) ${NC}";make -i --no-print-directory -C $(dir) fclean;)
 
 clean:
 	-rm -rf $(DIROBJ)

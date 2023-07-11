@@ -14,132 +14,134 @@
 #include "stack.h"
 #include "pivot.h"
 #include "util.h"
+#include "debug.h" //REMOVE
+#include "ft_printf.h"
 
-/* Finds the amount of rotations
- * needed to bring the largest element to the top of the stack
- * Reverse rotations are values < 0
+typedef struct s_helm_sort t_hs;
+typedef struct s_helm_sort_mode t_hm;
+typedef long long int t_i64;
+
+struct s_helm_sort_mode
+{
+	t_i64	place;
+	t_i64	max;
+	t_i64	min;
+};
+
+struct s_helm_sort
+{
+	int			quatre;
+	int			pushed;
+	int			reverse;
+	
+	// Mode forward and mode reverse
+	t_hm		mf;
+	t_hm		mr;
+
+	t_i64		p_max;
+	int			rotations;
+	t_sort		*sort;
+};
+
+
+
+
+/* Pushes from B to A (in a smart way)
+ * 
+ *
+ *
+ *
  */
-/*
-static int	rotate_largest(t_stack *stack, t_node *next, int max, int forwards)
-{
-	int		curr;
-	int		rotations;
-	int		rotated;
-
-	curr = INT_MIN;
-	rotations = 0;
-	rotated = 0;
-	while (next)
-	{
-		if (next->value > curr && next->value <= max)
-		{
-			curr = next->value;
-			rotations = rotated;
-		}
-		if (forwards)
-			next = next->next;
-		else
-			next = next->prev;
-		rotated += 1 + ((forwards == 0) * -2);
-	}
-	if (rotations > (stack->count / 2))
-		return (rotate_largest(stack, stack->tail, max, 0));
-	return (rotations);
-}
-*/
-static int rotate_largest(t_stack *stack, t_node *next, int forwards)
-{
-	int	min;
-	int rotations;
-	int rotated;
-
-	min = INT_MIN;
-	rotations = 0;
-	rotated = 0;
-	while (next)
-	{
-		if (next->value > min)
-		{
-			min = next->value;
-			rotations = rotated;
-		}
-		if (forwards)
-			next = next->next;
-		else
-			next = next->prev;
-		rotated += 1 + ((forwards == 0) * -2);
-	}
-	if (rotations > (stack->count / 2))
-		return (rotate_largest(stack, stack->tail, 0) - 1);
-	return (rotations);
-}/*
-static int rotate_smallest(t_stack *stack, t_node *next, int forwards)
-{
-	int	min;
-	int rotations;
-	int rotated;
-
-	min = INT_MAX;
-	rotations = 0;
-	rotated = 0;
-	while (next)
-	{
-		if (next->value < min)
-		{
-			min = next->value;
-			rotations = rotated;
-		}
-		if (forwards)
-			next = next->next;
-		else
-			next = next->prev;
-		rotated += 1 + ((forwards == 0) * -2);
-	}
-	if (rotations > (stack->count / 2))
-		return (rotate_smallest(stack, stack->tail, 0));
-	return (rotations);
-}
-*/
 void	push_back(t_sort *sort)
 {
 	int	rotations;
+	int alt_rot;
+	int max1;
+	int max2;
 
 	while (sort->b->count > 0)
 	{
-		rotations = rotate_largest(sort->b, sort->b->head, 1);
-		while (rotations != 0)
+		max1 = stat_largest(sort->b, INT_MAX);	
+		max2 = stat_largest(sort->b, max1 - 1);
+		rotations = rotate_target(sort->b, sort->b->head, max1, 1);
+		alt_rot = rotate_target(sort->b, sort->b->head, max2, 1);
+		if (alt_rot * rotations > 0 && alt_rot < rotations)
 		{
-			if (rotations < 0)
-				op_rrb(sort);
-			else
-				op_rb(sort);
-			rotations += ((rotations < 0) - (rotations > 0));
+			ext_op_xn(sort, op_rb, op_rrb, alt_rot);
+			op_pa(sort);
+			rotations = rotate_target(sort->b, sort->b->head, max1, 1);
+			ext_op_xn(sort, op_rb, op_rrb, rotations);	
+			op_pa(sort);
+			op_sa(sort);
+			continue;
 		}
+		ext_op_xn(sort, op_rb, op_rrb, rotations);
 		op_pa(sort);
 	}
 }
 
-/* Finds the smallest value in 'stack' that is larger than min. 
-int	get_smallest(t_stack *stack, int min)
+/* Pushes values from A into B.
+ * rotate through the unordered region of A if you come across
+ * a value that is within the range stored in helm_mode struct
+ * then it's pushed into b.
+ * the rest of the logic is handling the stoping of the pushing
+ * such as when we reach then end of the range.
+ * 
+ * Improvement Idea:
+ * Use a proper median for semi-sort into a instead of:
+ * value < (min + (max - min) / 2)
+ */
+void push_to_b(t_hs *hs, t_hm m, t_opfunc rot, int rev)
 {
-	t_node	*next;
-	int		cand;
+	t_stack	*a;
 
-	cand = INT_MAX;
-	next = stack->head;
-	while (next)
+	a = hs->sort->a;
+	while (hs->rotations < a->count + hs->pushed && a->count > 0)
 	{
-		if (next->value < cand & next->value > min)
-			cand = next->value;
-		next = next->next;
+		if (rev)
+			if (a->head->value == hs->sort->min || a->head->value > m.max)
+				break;
+		if (a->head->value <= m.max && a->head->value >= m.min)
+		{
+			op_pb(hs->sort);
+			if (hs->sort->b->head->value > m.min + ((m.max - m.min) / 2))
+				op_rb(hs->sort);
+			hs->pushed++; 
+		}
+		else
+		{
+			if (!rev && a->tail->value == hs->p_max)
+				break;	
+			rot(hs->sort);
+			hs->rotations++;
+		}
 	}
-	return (cand);
-}*/
-void	stn_print(t_sort *sort);
+}
 
+void	helm_sort_mode(t_hs *hs, t_hm *hm, int rev)
+{
+	int			(*med)(t_median*, int);
+	t_opfunc 	op;
+	t_i64		*v2;
+	t_i64		*v1;
 
-#include <unistd.h> // BAD INCLUDE
-#include <stdio.h> // BAD
+	med = &get_smallest;
+	v1 = &hm->max;
+	v2 = &hm->min;
+	op = op_rra;
+	if (rev)
+	{
+		med = &get_largest;
+		v1 = &hm->min;
+		v2 = &hm->max;
+		op = op_ra;
+	}
+	*v1 = med(hs->sort->med, hm->place);
+	push_to_b(hs, *hm, op, rev);
+	*v2 = med(hs->sort->med, hm->place + 1);
+	push_back(hs->sort);
+	hm->place += hs->pushed;
+}
 
 /* Helm sort:
  * Sort stack 'A' using the following approach:
@@ -148,60 +150,32 @@ void	stn_print(t_sort *sort);
  * Move the 'n/b' largest integers into 'B'
  * The move from stack 'B' move the largest back into 'A'
  */
-void	helm_sort(t_sort *sort)
+void	helm_sort(t_sort *sort, int cut)
 {
-	const int	quatre = (sort->a->count / 4) + (sort->a->count < 4);
-	int			pushed;
-	int			max;
-	int			min;
-	int			rotations;
+	t_hs		hs;
+	int			final_rot;
 
-	t_median	*med;
-	int			place;
-
-	place = quatre;
-	med = create_median(sort->a);
-	min = INT_MIN;
-	printf("size:%d quatre: %d ", sort->a->count, quatre); // BAD
-	while (!is_sorted(sort))
+	hs.sort = sort;
+	hs.mr.place = (sort->a->count / cut) + (sort->a->count < cut);
+	hs.mf.place = hs.mr.place;
+	hs.mf.min = get_smallest(sort->med, 0) - 1;
+	hs.mr.max = get_largest(sort->med, 0) + 1;
+	hs.reverse = 0;
+	hs.p_max = INT_MAX;
+	while (cut > 0)
 	{
-		rotations = 0;
-		pushed = 0;
-		max = get_smallest(med, place);
-		printf("min:%d max:%d place:%d\n", min, max, place); // BAD
-		while (rotations < sort->a->count && sort->a->count > 0)
-		{
-			if (sort->a->head->value <= max && sort->a->head->value >= min)
-			{
-				op_pb(sort);
-				pushed++;
-			}
-			else
-			{
-				op_ra(sort);
-				rotations++;
-			}
-		}
-		printf("pre_push_back:\n");
-		stn_print(sort);
-		min = get_smallest(med, place + 1);
-		push_back(sort);
-		printf("post_push_back:\n");	
-		stn_print(sort);
-		place += pushed;
-		//if (place - quatre > quatre * 3)
-			//	break ;
-		while (pushed > 0)
-		{
-			op_ra(sort);
-			pushed--;
-		}
-		printf("post_rotate:\n");
-		stn_print(sort);
-		usleep(1000000); // BAD FUNCTION, DO NOT USE.
+		hs.rotations = 0;
+		hs.pushed = 0;
+		if (!hs.reverse)
+			helm_sort_mode(&hs, &hs.mf, 0);
+		else
+			helm_sort_mode(&hs, &hs.mr, 1);
+		if (!hs.reverse)
+			ext_op_xn(sort, op_ra, (void*)0, hs.pushed);
+		hs.p_max = hs.mf.max;
+		hs.reverse = !hs.reverse;
+		cut--;
 	}
-	printf("Done\n\n!");
-	if (is_sorted(sort))
-		printf("Successfull sorted\n\n!");
-	med_delete(&med);
+	final_rot = rotate_target(sort->a, sort->a->head, sort->min, 1);
+	ext_op_xn(hs.sort, op_ra, op_rra, final_rot);
 }
