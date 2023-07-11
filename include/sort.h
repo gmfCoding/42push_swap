@@ -13,16 +13,22 @@
 #ifndef SORT_H
 # define SORT_H
 # include "stack.h"
+# include "pivot.h"
 
 typedef struct s_sort	t_sort;
 
-typedef void			(*t_opfunc)(t_sort *sort);
+typedef int			(*t_opfunc)(t_sort *sort);
 
 struct s_sort
 {
 	t_stack	*a;
 	t_stack	*b;
 	int		op_counter;
+
+	int			min;
+	int			max;
+	int			count;
+	t_median	*med;
 };
 
 int		is_sorted(t_sort *sort);

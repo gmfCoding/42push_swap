@@ -15,15 +15,17 @@
 #include "pivot.h"
 #include "util.h"
 #include "debug.h" //REMOVE
+#include "ft_printf.h"
 
 typedef struct s_helm_sort t_hs;
-typedef struct s_helm_sort_sub t_hss;
+typedef struct s_helm_sort_mode t_hm;
+typedef long long int t_i64;
 
-struct s_helm_sort_sub
+struct s_helm_sort_mode
 {
-	int max;
-	int min;
-	int place;
+	t_i64	place;
+	t_i64	max;
+	t_i64	min;
 };
 
 struct s_helm_sort
@@ -33,16 +35,16 @@ struct s_helm_sort
 	int			reverse;
 	
 	// Mode forward and mode reverse
-	t_hss		mr;
-	t_hss		mf;
-	
-	int			rotations;
+	t_hm		mf;
+	t_hm		mr;
 
+	t_i64		p_max;
+	int			rotations;
 	t_sort		*sort;
 	t_median	*med;
 };
 
-void	ext_op_xn(t_sort *sort, int (*op)(t_sort*), int (*rev)(t_sort*), int amount)
+void	ext_op_xn(t_sort *sort, t_opfunc op, t_opfunc rev, int amount)
 {
 	while (amount != 0)
 	{
@@ -54,6 +56,13 @@ void	ext_op_xn(t_sort *sort, int (*op)(t_sort*), int (*rev)(t_sort*), int amount
 	}
 }
 
+
+/* Pushes from B to A (in a smart way)
+ * 
+ *
+ *
+ *
+ */
 void	push_back(t_sort *sort)
 {
 	int	rotations;
@@ -82,95 +91,68 @@ void	push_back(t_sort *sort)
 	}
 }
 
-
-
-#include <unistd.h> // BAD INCLUDE
-#include <stdio.h> // BAD
-
-
-void helm_sort_reverse(t_hs *hs_ptr)
+/* Pushes values from A into B.
+ * rotate through the unordered region of A if you come across
+ * a value that is within the range stored in helm_mode struct
+ * then it's pushed into b.
+ * the rest of the logic is handling the stoping of the pushing
+ * such as when we reach then end of the range.
+ * 
+ * Improvement Idea:
+ * Use a proper median for semi-sort into a instead of:
+ * value < (min + (max - min) / 2)
+ */
+void push_to_b(t_hs *hs, t_hm m, t_opfunc rot, int rev)
 {
-	t_hs hs;
-	int max;
-	int min;
+	t_stack	*a;
 
-	hs = *hs_ptr;
-	hs.mr.min = get_largest(hs.med, hs.mr.place);
-	max = hs.mr.max;
-	min = hs.mr.min;
-	printf("PUSHING: %d to %d\n", hs.mr.min, hs.mr.max);
-	// using hs.pushed is on the right path
-	// but now why is group 3 in the wrong place?
-	while (hs.rotations < hs.sort->a->count + hs.pushed && hs.sort->a->count > 0)
+	a = hs->sort->a;
+	while (hs->rotations < a->count + hs->pushed && a->count > 0)
 	{
-		if (hs.sort->a->head->value == get_smallest(hs.med, 0))
+		if (rev)
+			if (a->head->value == hs->sort->min || a->head->value > m.max)
 				break;
-		if (hs.sort->a->head->value > max)
-				break;
-		if (hs.sort->a->head->value <= max && hs.sort->a->head->value >= min)
+		if (a->head->value <= m.max && a->head->value >= m.min)
 		{
-			op_pb(hs.sort);
-			hs.pushed++;
+			op_pb(hs->sort);
+			if (m.max - m.min < 1000)
+				if (hs->sort->b->head->value > m.min + ((m.max - m.min) / 2))
+					op_rb(hs->sort);
+			hs->pushed++; 
 		}
 		else
 		{
-			op_ra(hs.sort);
-			hs.rotations++; // DO WE NEED THIS ANYMORE?
+			if (!rev && a->tail->value == hs->p_max)
+				break;	
+			rot(hs->sort);
+			hs->rotations++;
 		}
 	}
-	hs.mr.max = get_largest(hs.med, hs.mr.place + 1);
-	printf("pre_push_back_r");
-	stn_print(hs.sort);
-	push_back(hs.sort);
-	printf("post_push_back_r");
-	stn_print(hs.sort);
-	hs.mr.place += hs.pushed;
-	*hs_ptr = hs; 
 }
 
-void helm_sort_forward(t_hs *hs_ptr)
+void	helm_sort_mode(t_hs *hs, t_hm *hm, int rev)
 {
-	t_hs hs;
-	int min;
-	int max;
-	int p_max;
-	
-	hs = *hs_ptr;
-	p_max = hs.mf.max;
-	hs.mf.max = get_smallest(hs.med, hs.mf.place);
-	min = hs.mf.min;
-	max = hs.mf.max;
-	printf("PUSHING: %d to %d\n", hs.mf.min, hs.mf.max);
-	while (hs.rotations < hs.sort->a->count + hs.pushed && hs.sort->a->count > 0)
-	{
+	int			(*med)(t_median*, int);
+	t_opfunc 	op;
+	t_i64		*v2;
+	t_i64		*v1;
 
-		if (hs.sort->a->head->value <= max && hs.sort->a->head->value >= min)
-		{
-			op_pb(hs.sort);
-			hs.pushed++;  // Do we need this for forward?
-		}
-		else
-		{
-			if (hs.sort->a->tail->value == p_max)
-				break;	
-			op_rra(hs.sort);
-			hs.rotations++; // Do we need this?
-		}
-	}
-	hs.mf.min = get_smallest(hs.med, hs.mf.place + 1);
-	printf("pre_push_back_f");
-	stn_print(hs.sort);
-	push_back(hs.sort);
-	printf("post_push_back_f");
-	stn_print(hs.sort);
-	hs.mf.place += hs.pushed;
-	printf("align!!\n");
-	while (hs.pushed != 0)
+	med = &get_smallest;
+	v1 = &hm->max;
+	v2 = &hm->min;
+	op = op_rra;
+	if (rev)
 	{
-		op_ra(hs.sort);
-		hs.pushed--;
+		med = &get_largest;
+		v1 = &hm->min;
+		v2 = &hm->max;
+		op = op_ra;
 	}
-	*hs_ptr = hs; 
+	*v1 = med(hs->med, hm->place);
+	push_to_b(hs, *hm, op, rev);
+	*v2 = med(hs->med, hm->place + 1);
+	push_back(hs->sort);
+	hm->place += hs->pushed;
 }
 
 /* Helm sort:
@@ -186,32 +168,32 @@ void	helm_sort(t_sort *sort, int cut)
 	t_hs		hs;
 	int			final_rot;
 
-
 	hs.sort = sort;
 	hs.mr.place = quatre;
 	hs.mf.place = quatre;
-	hs.med = create_median(sort->a);
-	hs.mf.min = INT_MIN;
-	hs.mr.max = INT_MAX;
+	hs.med = sort->med;
+	hs.mf.min = get_smallest(hs.med, 0) - 1;
+	hs.mf.max = get_smallest(hs.med, quatre) + 1;
+	hs.mr.max = get_largest(hs.med, 0) + 1;
 	hs.reverse = 0;
-
+	hs.p_max = INT_MAX;
 	while (cut > 0)
 	{
 		hs.rotations = 0;
 		hs.pushed = 0;
-		printf("pre_sort_%s_", !hs.reverse ? "forward" : "reverse");
-		stn_print(hs.sort);
 		if (!hs.reverse)
-			helm_sort_forward(&hs);
+			helm_sort_mode(&hs, &hs.mf, 0);
 		else
-			helm_sort_reverse(&hs);
+			helm_sort_mode(&hs, &hs.mr, 1);
+		if (!hs.reverse)
+			ext_op_xn(sort, op_ra, (void*)0, hs.pushed);
+		hs.p_max = hs.mf.max;
 		hs.reverse = !hs.reverse;
 		cut--;
 	}
-	op_pa(sort);
-	final_rot = rotate_target(hs.sort->a, hs.sort->a->head, get_smallest(hs.med, 0), 1);
+//	op_pa(sort);
+	final_rot = rotate_target(sort->a, sort->a->head, sort->min, 1);
 	ext_op_xn(hs.sort, op_ra, op_rra, final_rot);
 	if (is_sorted(sort))
-		printf("Successfull sorted\n\n!");
-	med_delete(&hs.med);
+		ft_printf("Successfull sorted in %d\n\n!", sort->op_counter); // REMOVE
 }

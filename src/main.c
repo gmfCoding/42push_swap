@@ -19,22 +19,24 @@
 				   
 t_sort	*initialise(int argc, char **argv)
 {
-	t_sort	*sort;
+	t_sort		*sort;
 
 	sort = ft_calloc(sizeof(t_sort), 1);
 	sort->op_counter = 0;
 	sort->a = st_new("a");
 	sort->b = st_new("b");
 	parse(sort, argc, argv);
+	sort->med = create_median(sort->a);
+	sort->min = get_smallest(sort->med, 0);
+	sort->max = get_largest(sort->med, 0);
 	return (sort);
 }
-#include <stdio.h>
-#include <unistd.h> // WARNING
+
 int	main(int argc, char **argv)
 {
-	static int cut = 1;
-	t_sort	*sort;
-	setbuf(stdout, NULL); // WARNING
+	static int	cut = 1;
+	t_sort		*sort;
+	
 	sort = initialise(argc, argv);
 	if (sort->a->count > 40)
 		cut = 2;
@@ -42,8 +44,10 @@ int	main(int argc, char **argv)
 		cut = 4;
 	if (sort->a->count > 250)
 		cut = 8;
+	if (sort->a->count > 600)
+		cut = sort->a->count / 60;
 	helm_sort(sort, cut);
-	stn_print(sort);
+	med_delete(&sort->med);
 	st_delete(sort->a);
 	st_delete(sort->b);
 	free(sort);
