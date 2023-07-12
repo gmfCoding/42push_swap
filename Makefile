@@ -22,6 +22,8 @@ DIRLIB = .lib/
 SRCS = $(patsubst %.c,$(DIRSRC)%.c, $(SRCSF))
 OBJS = $(patsubst %.c,$(DIROBJ)%.o, $(SRCSF))
 LIBS = $(patsubst %.a,$(DIRLIB)%.a, $(LIBSF))
+
+# All headers files are a dependency, so if any changes there will a recompile
 INCS = $(shell find $(DIRINC) -name "*.h")
 
 LIB-I = $(patsubst %,-I%,$(dir $(LIBS)))

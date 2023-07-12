@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "pivot.h"
+#include "median.h"
 #include "libft.h"
 
 void	median_insertion_sort(t_median *med, int n)

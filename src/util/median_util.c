@@ -1,4 +1,16 @@
-#include "pivot.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   median_util.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42adel.org.au>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/12 16:36:37 by clovell           #+#    #+#             */
+/*   Updated: 2023/07/12 16:36:38 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "median.h"
 
 /* Returns the last index that is less than or equal to value.
  * Such that the next index is greater than value.

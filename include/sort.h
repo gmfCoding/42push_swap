@@ -6,14 +6,14 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:19:55 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/29 16:59:58 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/12 16:34:23 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SORT_H
 # define SORT_H
 # include "stack.h"
-# include "pivot.h"
+# include "median.h"
 
 typedef struct s_sort	t_sort;
 

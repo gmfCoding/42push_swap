@@ -12,7 +12,7 @@
 #include <limits.h>
 #include "sort.h"
 #include "stack.h"
-#include "pivot.h"
+#include "median.h"
 #include "util.h"
 #include "debug.h" //REMOVE
 #include "ft_printf.h"
