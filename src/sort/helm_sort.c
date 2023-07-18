@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:24:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/06/07 12:33:09 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:13:47 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
@@ -17,9 +17,9 @@
 #include "debug.h" //REMOVE
 #include "ft_printf.h"
 
-typedef struct s_helm_sort t_hs;
-typedef struct s_helm_sort_mode t_hm;
-typedef long long int t_i64;
+typedef struct s_helm_sort		t_hs;
+typedef struct s_helm_sort_mode	t_hm;
+typedef long long int			t_i64;
 
 struct s_helm_sort_mode
 {
@@ -33,8 +33,7 @@ struct s_helm_sort
 	int			quatre;
 	int			pushed;
 	int			reverse;
-	
-	// Mode forward and mode reverse
+
 	t_hm		mf;
 	t_hm		mr;
 
@@ -42,9 +41,6 @@ struct s_helm_sort
 	int			rotations;
 	t_sort		*sort;
 };
-
-
-
 
 /* Pushes from B to A (in a smart way)
  * 
@@ -55,13 +51,13 @@ struct s_helm_sort
 void	push_back(t_sort *sort)
 {
 	int	rotations;
-	int alt_rot;
-	int max1;
-	int max2;
+	int	alt_rot;
+	int	max1;
+	int	max2;
 
 	while (sort->b->count > 0)
 	{
-		max1 = stat_largest(sort->b, INT_MAX);	
+		max1 = stat_largest(sort->b, INT_MAX);
 		max2 = stat_largest(sort->b, max1 - 1);
 		rotations = rotate_target(sort->b, sort->b->head, max1, 1);
 		alt_rot = rotate_target(sort->b, sort->b->head, max2, 1);
@@ -70,10 +66,10 @@ void	push_back(t_sort *sort)
 			ext_op_xn(sort, op_rb, op_rrb, alt_rot);
 			op_pa(sort);
 			rotations = rotate_target(sort->b, sort->b->head, max1, 1);
-			ext_op_xn(sort, op_rb, op_rrb, rotations);	
+			ext_op_xn(sort, op_rb, op_rrb, rotations);
 			op_pa(sort);
 			op_sa(sort);
-			continue;
+			continue ;
 		}
 		ext_op_xn(sort, op_rb, op_rrb, rotations);
 		op_pa(sort);
@@ -91,7 +87,7 @@ void	push_back(t_sort *sort)
  * Use a proper median for semi-sort into a instead of:
  * value < (min + (max - min) / 2)
  */
-void push_to_b(t_hs *hs, t_hm m, t_opfunc rot, int rev)
+void	push_to_b(t_hs *hs, t_hm m, t_opfunc rot, int rev)
 {
 	t_stack	*a;
 
@@ -100,18 +96,18 @@ void push_to_b(t_hs *hs, t_hm m, t_opfunc rot, int rev)
 	{
 		if (rev)
 			if (a->head->value == hs->sort->min || a->head->value > m.max)
-				break;
+				break ;
 		if (a->head->value <= m.max && a->head->value >= m.min)
 		{
 			op_pb(hs->sort);
 			if (hs->sort->b->head->value > m.min + ((m.max - m.min) / 2))
 				op_rb(hs->sort);
-			hs->pushed++; 
+			hs->pushed++;
 		}
 		else
 		{
 			if (!rev && a->tail->value == hs->p_max)
-				break;	
+				break ;
 			rot(hs->sort);
 			hs->rotations++;
 		}
@@ -121,10 +117,12 @@ void push_to_b(t_hs *hs, t_hm m, t_opfunc rot, int rev)
 void	helm_sort_mode(t_hs *hs, t_hm *hm, int rev)
 {
 	int			(*med)(t_median*, int);
-	t_opfunc 	op;
+	t_opfunc	op;
 	t_i64		*v2;
 	t_i64		*v1;
 
+	hs->rotations = 0;
+	hs->pushed = 0;
 	med = &get_smallest;
 	v1 = &hm->max;
 	v2 = &hm->min;
@@ -164,14 +162,12 @@ void	helm_sort(t_sort *sort, int cut)
 	hs.p_max = INT_MAX;
 	while (cut > 0)
 	{
-		hs.rotations = 0;
-		hs.pushed = 0;
 		if (!hs.reverse)
 			helm_sort_mode(&hs, &hs.mf, 0);
 		else
 			helm_sort_mode(&hs, &hs.mr, 1);
 		if (!hs.reverse)
-			ext_op_xn(sort, op_ra, (void*)0, hs.pushed);
+			ext_op_xn(sort, op_ra, (void *)0, hs.pushed);
 		hs.p_max = hs.mf.max;
 		hs.reverse = !hs.reverse;
 		cut--;

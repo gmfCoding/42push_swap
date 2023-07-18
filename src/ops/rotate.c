@@ -6,25 +6,18 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:49:38 by clovell           #+#    #+#             */
-/*   Updated: 2023/06/06 15:52:32 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:03:27 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 #include "sort.h"
 
-
-
-/* 1-2-3 == 2-3-1
- * H   T
- *  H
- * 
- */
 void	st_rotate(t_stack *s)
 {
 	t_node	*move;
 	t_node	**head;
 	t_node	**tail;
-	
+
 	head = &s->head;
 	tail = &s->tail;
 	move = *head;

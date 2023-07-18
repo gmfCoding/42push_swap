@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cost.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42adel.org.au>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/18 17:33:44 by clovell           #+#    #+#             */
+/*   Updated: 2023/07/18 17:35:19 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include <limits.h>
 #include "stack.h"
 
@@ -5,11 +16,11 @@
  * needed to bring the largest element to the top of the stack
  * Reverse rotations are values < 0
  */
-int rotate_largest(t_stack *stack, t_node *next, int forwards)
+int	rotate_largest(t_stack *stack, t_node *next, int forwards)
 {
 	int	min;
-	int rotations;
-	int rotated;
+	int	rotations;
+	int	rotated;
 
 	min = INT_MIN;
 	rotations = 0;
@@ -36,11 +47,11 @@ int rotate_largest(t_stack *stack, t_node *next, int forwards)
  * needed to bring the smallest element to the top of the stack
  * Reverse rotations are values < 0
  */
-int rotate_smallest(t_stack *stack, t_node *next, int forwards)
+int	rotate_smallest(t_stack *stack, t_node *next, int forwards)
 {
 	int	min;
-	int rotations;
-	int rotated;
+	int	rotations;
+	int	rotated;
 
 	min = INT_MAX;
 	rotations = 0;
@@ -63,9 +74,9 @@ int rotate_smallest(t_stack *stack, t_node *next, int forwards)
 	return (rotations);
 }
 
-int rotate_target(t_stack *stack, t_node *next, int target, int forwards)
+int	rotate_target(t_stack *stack, t_node *next, int target, int forwards)
 {
-	int rotated;
+	int	rotated;
 
 	rotated = 0;
 	while (next)

@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:49:24 by clovell           #+#    #+#             */
-/*   Updated: 2023/06/05 14:44:10 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:02:48 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	st_rev_rotate(t_stack *s)
 	t_node	**head;
 	t_node	**tail;
 
-	head = &s->head;	
+	head = &s->head;
 	tail = &s->tail;
 	move = *tail;
 	(*tail) = (*tail)->prev;

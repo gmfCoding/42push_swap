@@ -6,10 +6,9 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:19:55 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/12 16:34:23 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:09:44 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #ifndef SORT_H
 # define SORT_H
 # include "stack.h"
@@ -17,20 +16,19 @@
 
 typedef struct s_sort	t_sort;
 
-typedef int			(*t_opfunc)(t_sort *sort);
+typedef int				(*t_opfunc)(t_sort *sort);
 
 struct s_sort
 {
-	t_stack	*a;
-	t_stack	*b;
-	int		op_counter;
+	t_stack		*a;
+	t_stack		*b;
+	int			op_counter;
 
 	int			min;
 	int			max;
 	int			count;
 	t_median	*med;
 };
-
 
 void	bubble_sort(t_sort *sort);
 
@@ -39,12 +37,12 @@ void	helm_sort(t_sort *sort, int cut);
 /* Returns 1 if stack A is in a fully sorted state */
 int		is_sorted(t_sort *sort);
 
-/* Returns the largest value inside a stack that is less than or equal to max */
+/* Returns the largest value inside a stack that is <= to max */
 int		stat_largest(t_stack *stack, int max);
-/* Returns the smallest value inside a stack that is greather than or equal to min */
+/* Returns the smallest value inside a stack that is >= to min */
 int		stat_smallest(t_stack *stack, int min);
 
-/* Returns the minimum amount of rotations needed to get some value to the top of the stack.
+/* Returns the rotation delta needed to get 'target' to the top of the stack.
  * Always next: stack->head for public calls.
  * Always forwards: 1 for public calls. 
  */

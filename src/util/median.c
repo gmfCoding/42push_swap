@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   median.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42adel.org.au>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/18 17:36:19 by clovell           #+#    #+#             */
+/*   Updated: 2023/07/18 17:36:26 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include <stdlib.h>
 #include "median.h"
 #include "libft.h"
 
 void	median_insertion_sort(t_median *med, int n)
 {
-	int i;
-	int key;
-	int j;
+	int	i;
+	int	key;
+	int	j;
 
 	i = 1;
 	while (i < n)
@@ -23,7 +34,7 @@ void	median_insertion_sort(t_median *med, int n)
 	}
 }
 
-t_median *create_median(t_stack *stack)
+t_median	*create_median(t_stack *stack)
 {
 	t_node		*curr;
 	t_median	*med;

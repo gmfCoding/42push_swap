@@ -6,11 +6,10 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 12:44:06 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/24 16:59:17 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:02:26 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "sort.h"
-#include <stdio.h> // WARNING
 
 int	op_pa(t_sort *sort)
 {
@@ -18,9 +17,6 @@ int	op_pa(t_sort *sort)
 
 	if (sort->b->count == 0)
 		return (0);
-#ifdef DEBUG
-	printf("%p:", sort->b->head) ;// WARNIN
-#endif
 	write_op("pa");
 	value = st_pop(sort->b);
 	st_push(sort->a, value);

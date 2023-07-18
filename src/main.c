@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:12:35 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/12 16:39:17 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:11:27 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -16,10 +16,10 @@
 #include "sort.h"
 #include "program.h"
 #include "debug.h" // remove
-				   
+
 t_sort	*initialise(int argc, char **argv)
 {
-	t_sort		*sort;
+	t_sort	*sort;
 
 	sort = ft_calloc(sizeof(t_sort), 1);
 	sort->op_counter = 0;
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 {
 	static int	cut = 1;
 	t_sort		*sort;
-	
+
 	sort = initialise(argc, argv);
 	if (sort->a->count > 40)
 		cut = 2;
@@ -47,8 +47,6 @@ int	main(int argc, char **argv)
 	if (sort->a->count > 600)
 		cut = sort->a->count / 60;
 	helm_sort(sort, cut);
-	if (is_sorted(sort))
-		ft_printf("Successfull sorted in %d\n\n!", sort->op_counter); // REMOVE
 	med_delete(&sort->med);
 	st_delete(sort->a);
 	st_delete(sort->b);

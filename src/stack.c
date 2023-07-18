@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 14:45:34 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/12 16:39:17 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/18 17:32:55 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -15,7 +15,7 @@
 
 t_stack	*st_new(char *name)
 {
-	t_stack *stack;
+	t_stack	*stack;
 
 	stack = ft_calloc(sizeof(t_stack), 1);
 	stack->name = name;
@@ -24,8 +24,9 @@ t_stack	*st_new(char *name)
 
 void	st_delete(t_stack *stack)
 {
-	t_node *next;
-	t_node *tmp;
+	t_node	*next;
+	t_node	*tmp;
+
 	next = stack->head;
 	while (next)
 	{

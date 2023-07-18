@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   median.h                                            :+:      :+:    :+:   */
+/*   median.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 15:10:57 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/29 18:04:34 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:07:25 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#ifndef PIVOT_H
-# define PIVOT_H
+#ifndef MEDIAN_H
+# define MEDIAN_H
 # include "stack.h"
 
 typedef struct s_median
@@ -24,14 +23,14 @@ typedef struct s_median
 	int	answer;
 }	t_median;
 
-int	med_first_value_lte(t_median *med, int curr);
-int med_first_idx_lte(t_median *med, int value);
-int	median_prev(t_median *med, int curr);
-int	median_next(t_median *med, int curr);
+int			med_first_value_lte(t_median *med, int curr);
+int			med_first_idx_lte(t_median *med, int value);
+int			median_prev(t_median *med, int curr);
+int			median_next(t_median *med, int curr);
 
-int	get_largest(t_median *median, int kth);
-int	get_smallest(t_median *median, int kth);
-t_median *create_median(t_stack *stack);
+int			get_largest(t_median *median, int kth);
+int			get_smallest(t_median *median, int kth);
+t_median	*create_median(t_stack *stack);
 
 int			median(t_median *median);
 t_median	*median_from_stack(t_stack *stack);

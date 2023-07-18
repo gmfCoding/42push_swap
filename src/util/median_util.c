@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42adel.org.au>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 16:36:37 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/12 16:36:38 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/18 17:42:29 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /* Returns the last index that is less than or equal to value.
  * Such that the next index is greater than value.
  * */
-int med_first_idx_lte(t_median *med, int value)
+int	med_first_idx_lte(t_median *med, int value)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < (med->size - 1))
@@ -34,8 +34,8 @@ int med_first_idx_lte(t_median *med, int value)
  */
 int	med_first_value_lte(t_median *med, int curr)
 {
-	int index;
-	
+	int	index;
+
 	index = med_first_idx_lte(med, curr);
 	return (med->array[index]);
 }
@@ -45,8 +45,8 @@ int	med_first_value_lte(t_median *med, int curr)
  */
 int	median_prev(t_median *med, int curr)
 {
-	int index;
-	
+	int	index;
+
 	index = med_first_idx_lte(med, curr);
 	if (index == 0)
 		index = 1;
@@ -58,8 +58,8 @@ int	median_prev(t_median *med, int curr)
  */
 int	median_next(t_median *med, int curr)
 {
-	int index;
-	
+	int	index;
+
 	index = med_first_idx_lte(med, curr);
 	if (index >= med->size)
 		index--;

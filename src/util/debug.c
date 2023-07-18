@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   debug.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clovell <clovell@student.42adel.org.au>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/18 17:48:43 by clovell           #+#    #+#             */
+/*   Updated: 2023/07/18 17:49:24 by clovell          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "sort.h"
 #include "stack.h"
 #include "ft_printf.h"
 
 int	dbg_get_value_at(t_stack *st, int rotations)
 {
-	t_node *value;
+	t_node	*value;
+
 	value = st->head;
 	while (rotations != 0)
 	{
@@ -14,7 +26,7 @@ int	dbg_get_value_at(t_stack *st, int rotations)
 			value = value->next;
 		rotations += ((rotations < 0) - (rotations > 0));
 	}
-	return value->value;
+	return (value->value);
 }
 
 void	stn_print(t_sort *sort)
@@ -45,4 +57,3 @@ void	stn_print(t_sort *sort)
 	ft_printf("A\tB\n");
 	ft_printf("in %d operations.\n", sort->op_counter);
 }
-

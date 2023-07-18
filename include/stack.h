@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:17:54 by clovell           #+#    #+#             */
-/*   Updated: 2023/05/25 12:03:43 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/18 17:32:22 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ struct s_node
 	int		value;
 };
 
-int		st_ishead(t_node *node); // REMOVE
-int		st_istail(t_node *node); // REMOVE
-								 
 t_node	*stn_new(int value);
 t_stack	*st_new(char *name);
 void	st_push(t_stack *stack, int value);
