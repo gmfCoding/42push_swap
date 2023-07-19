@@ -6,14 +6,14 @@
 /*   By: clovell <clovell@student.42adel.org.au>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:36:19 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/18 17:36:26 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/19 21:16:12 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
 #include "median.h"
 #include "libft.h"
 
-void	median_insertion_sort(t_median *med, int n)
+static void	median_insertion_sort(t_median *med, int n)
 {
 	int	i;
 	int	key;

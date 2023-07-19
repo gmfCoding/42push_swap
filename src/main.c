@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:12:35 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/18 18:11:27 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/19 23:37:05 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -38,6 +38,8 @@ int	main(int argc, char **argv)
 	t_sort		*sort;
 
 	sort = initialise(argc, argv);
+	if (is_sorted(sort))
+		return (0);
 	if (sort->a->count > 40)
 		cut = 2;
 	if (sort->a->count > 70)
@@ -46,7 +48,10 @@ int	main(int argc, char **argv)
 		cut = 8;
 	if (sort->a->count > 600)
 		cut = sort->a->count / 60;
-	helm_sort(sort, cut);
+	if (sort->a->count <= 5)
+		least_sort(sort);
+	else
+		helm_sort(sort, cut);
 	med_delete(&sort->med);
 	st_delete(sort->a);
 	st_delete(sort->b);

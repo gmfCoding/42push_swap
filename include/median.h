@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 15:10:57 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/18 18:07:25 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/19 23:22:45 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MEDIAN_H
@@ -24,7 +24,7 @@ typedef struct s_median
 }	t_median;
 
 int			med_first_value_lte(t_median *med, int curr);
-int			med_first_idx_lte(t_median *med, int value);
+int			med_idx_fit_value(t_median *med, int value);
 int			median_prev(t_median *med, int curr);
 int			median_next(t_median *med, int curr);
 

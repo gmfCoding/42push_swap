@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:19:55 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/18 18:09:44 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/19 21:19:37 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef SORT_H
@@ -33,6 +33,8 @@ struct s_sort
 void	bubble_sort(t_sort *sort);
 
 void	helm_sort(t_sort *sort, int cut);
+void	tiny_sort(t_sort *sort);
+void	least_sort(t_sort *sort);
 
 /* Returns 1 if stack A is in a fully sorted state */
 int		is_sorted(t_sort *sort);
