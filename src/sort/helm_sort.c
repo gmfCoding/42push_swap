@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:24:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/18 18:13:47 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:20:18 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
@@ -43,10 +43,10 @@ struct s_helm_sort
 };
 
 /* Pushes from B to A (in a smart way)
- * 
- *
- *
- *
+ * Attempts to rotate to the LARGEST number.
+ * If the value of LARGEST_IDX-1 rotation delta is in
+ * the same direction and less than LARGEST numbers delta
+ * then we also push it.
  */
 void	push_back(t_sort *sort)
 {
