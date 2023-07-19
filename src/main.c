@@ -6,30 +6,45 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:12:35 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/19 23:37:05 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/20 01:16:58 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "libft.h"
-#include "ft_printf.h"
+# include "ft_printf.h" // REMOVE
+
 #include "sort.h"
 #include "program.h"
-#include "debug.h" // remove
+# include "debug.h" // remove
 
-t_sort	*initialise(int argc, char **argv)
+int	initialise(t_sort **sort_ptr, int argc, char **argv)
 {
 	t_sort	*sort;
+	int		errored;
 
 	sort = ft_calloc(sizeof(t_sort), 1);
 	sort->op_counter = 0;
 	sort->a = st_new("a");
 	sort->b = st_new("b");
-	parse(sort, argc, argv);
+	stn_print(sort);
+	errored = parse(sort, argc, argv);
+	errored |= !no_duplicates(sort);
+	if (errored)
+		write(1, "Errored", 7);
+	if (errored || sort->a->count == 0 || is_sorted(sort))
+	{
+		free(sort->a);
+		free(sort->b);
+		free(sort);
+		return (1);
+	}
 	sort->med = create_median(sort->a);
 	sort->min = get_smallest(sort->med, 0);
 	sort->max = get_largest(sort->med, 0);
-	return (sort);
+	*sort_ptr = sort;
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -37,8 +52,7 @@ int	main(int argc, char **argv)
 	static int	cut = 1;
 	t_sort		*sort;
 
-	sort = initialise(argc, argv);
-	if (is_sorted(sort))
+	if (initialise(&sort, argc, argv))
 		return (0);
 	if (sort->a->count > 40)
 		cut = 2;

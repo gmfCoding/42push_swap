@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 11:19:55 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/19 21:19:37 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/20 00:13:18 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef SORT_H
@@ -38,6 +38,8 @@ void	least_sort(t_sort *sort);
 
 /* Returns 1 if stack A is in a fully sorted state */
 int		is_sorted(t_sort *sort);
+/* Returns 1 if there are no duplicates in stack A */
+int		no_duplicates(t_sort *sort);
 
 /* Returns the largest value inside a stack that is <= to max */
 int		stat_largest(t_stack *stack, int max);
