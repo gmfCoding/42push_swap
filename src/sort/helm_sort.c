@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:24:28 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/18 18:20:18 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/20 14:24:16 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
@@ -14,8 +14,6 @@
 #include "stack.h"
 #include "median.h"
 #include "util.h"
-#include "debug.h" //REMOVE
-#include "ft_printf.h"
 
 typedef struct s_helm_sort		t_hs;
 typedef struct s_helm_sort_mode	t_hm;

@@ -1,11 +1,11 @@
 SRCSF =	main.c operations.c node.c stack.c input.c verify.c \
-	   	$(addprefix util/, tiny.c cost.c median.c median_util.c debug.c stats.c) \
-	   	$(addprefix sort/, helm_sort.c bubble_sort.c least_sort.c) \
+	   	$(addprefix util/, tiny.c cost.c median.c median_util.c stats.c) \
+	   	$(addprefix sort/, helm_sort.c least_sort.c) \
 	   	$(addprefix ops/, push.c rev_rotate.c rotate.c swap.c extra.c)
 
 OBJSF = $(patsubst %.c,%.o, $(SRCSF))
 
-LIBSF = libft/libft.a gnl/libgnl.a ftprintf/libftprintf.a
+LIBSF = libft/libft.a
 
 ifndef $(OS)
 OS := $(shell uname)
@@ -56,22 +56,17 @@ $(OBJS): $(DIROBJ)%.o : $(DIRSRC)%.c $(INCS)
 
 # COMPILE LIBS
 $(LIBS):
-	@-echo "\n${GREEN}Compiling Library: ${BLUE}$@ ${NC}"
-	@if [ "$(notdir $@)" = "libft.a" ]; then \
-		make -s -C $(dir $@) all bonus; \
-	else \
-		make -s -C $(dir $@) all; \
-	fi
+	@-echo "\n${GREEN}Compiling ${BLUE}Libft: ${NC}"
+	@-make -s -C $(dir $@) all bonus
 
 # CLEANING
 fclean: libclean clean
 	-rm -f $(NAME)
 	@-echo "${GREEN}DONE CLEANING!${NC}"
 
-libclean_clean = $(dir $(shell find $(DIRLIB) -name "Makefile"))
 libclean:
-	@-echo "\n${GREEN}Cleaning Libraries: ${CYAN}$(basename $(libclean_clean))${NC}"
-	@-$(foreach dir,$(libclean_clean),echo "\n${GREEN}Cleaning: ${CYAN} $(dir) ${NC}";make -i --no-print-directory -C $(dir) fclean;)
+	@-echo "\n${GREEN}Cleaning Libft${NC}"
+	@-make -C .lib/libft fclean
 
 clean:
 	-rm -rf $(DIROBJ)

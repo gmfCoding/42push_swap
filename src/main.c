@@ -6,18 +6,15 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:12:35 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/20 01:28:23 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/20 14:23:57 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
 #include <unistd.h>
 
 #include "libft.h"
-# include "ft_printf.h" // REMOVE
-
 #include "sort.h"
 #include "program.h"
-# include "debug.h" // remove
 
 int	initialise(t_sort **sort_ptr, int argc, char **argv)
 {
