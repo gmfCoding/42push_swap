@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42adel.org.au>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:05:46 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/20 00:06:12 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/20 17:52:42 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	tiny_sort(t_sort *sort)
 	if (eval(sort, 1, 2, med) && eval(sort, 3, 3, med))
 		op_sa(sort);
 	else if (eval(sort, 1, 3, med) && eval(sort, 3, 1, med))
-	{	
+	{
 		op_sa(sort);
 		op_rra(sort);
 	}

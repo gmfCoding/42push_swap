@@ -6,7 +6,7 @@
 /*   By: clovell <clovell@student.42adel.org.au>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 16:36:21 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/18 17:41:06 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/20 17:52:57 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "stack.h"
@@ -40,7 +40,7 @@ int	stat_smallest(t_stack *stack, int min)
 	while (next)
 	{
 		if (next->value < cand && next->value >= min)
-				cand = next->value;
+			cand = next->value;
 		next = next->next;
 	}
 	return (cand);
