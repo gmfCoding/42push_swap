@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:12:35 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/25 16:44:09 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/25 17:20:43 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -16,7 +16,7 @@
 #include "sort.h"
 #include "program.h"
 
-int	initialise(t_sort **sort_ptr, int argc, char **argv)
+t_sort	*initialise(int argc, char **argv)
 {
 	t_sort	*sort;
 	int		errored;
@@ -31,16 +31,15 @@ int	initialise(t_sort **sort_ptr, int argc, char **argv)
 		write(2, "Error\n", 6);
 	if (errored || sort->a->count == 0 || is_sorted(sort))
 	{
-		free(sort->a);
-		free(sort->b);
+		st_delete(sort->a);
+		st_delete(sort->b);
 		free(sort);
-		return (1);
+		return (NULL);
 	}
 	sort->med = create_median(sort->a);
 	sort->min = get_smallest(sort->med, 0);
 	sort->max = get_largest(sort->med, 0);
-	*sort_ptr = sort;
-	return (0);
+	return (sort);
 }
 
 int	main(int argc, char **argv)
@@ -48,22 +47,24 @@ int	main(int argc, char **argv)
 	static int	cut = 1;
 	t_sort		*sort;
 
-	if (initialise(&sort, argc, argv))
-		return (0);
-	if (sort->a->count > 40)
-		cut = 2;
-	if (sort->a->count > 70)
-		cut = 4;
-	if (sort->a->count > 250)
-		cut = 8;
-	if (sort->a->count > 600)
-		cut = sort->a->count / 60;
-	if (sort->a->count <= 5)
-		least_sort(sort);
-	else
-		helm_sort(sort, cut);
-	med_delete(&sort->med);
-	st_delete(sort->a);
-	st_delete(sort->b);
-	free(sort);
+	sort = initialise(argc, argv);
+	if (sort != NULL)
+	{
+		if (sort->a->count > 40)
+			cut = 2;
+		if (sort->a->count > 70)
+			cut = 4;
+		if (sort->a->count > 250)
+			cut = 8;
+		if (sort->a->count > 600)
+			cut = sort->a->count / 60;
+		if (sort->a->count <= 5)
+			least_sort(sort);
+		else
+			helm_sort(sort, cut);
+		med_delete(&sort->med);
+		st_delete(sort->a);
+		st_delete(sort->b);
+		free(sort);
+	}
 }

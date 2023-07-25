@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:54:40 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/20 14:16:42 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/25 17:27:25 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -61,10 +61,12 @@ int	parse(t_sort *sort, int argc, char **argv)
 {
 	int		i;
 
-	if (argc <= 1)
+	if (argc <= 1 || *argv[1] == '\0')
 		return (0);
 	if (ft_strchr(argv[1], ' ') != NULL)
 	{
+		if (argc >= 3)
+			return (1);
 		return (handle_quoted(sort, argv[1]));
 	}
 	else
