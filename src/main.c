@@ -6,7 +6,7 @@
 /*   By: clovell <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 22:12:35 by clovell           #+#    #+#             */
-/*   Updated: 2023/07/20 14:23:57 by clovell          ###   ########.fr       */
+/*   Updated: 2023/07/25 16:44:09 by clovell          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -28,7 +28,7 @@ int	initialise(t_sort **sort_ptr, int argc, char **argv)
 	errored = parse(sort, argc, argv);
 	errored |= !no_duplicates(sort);
 	if (errored)
-		write(1, "Error\n", 6);
+		write(2, "Error\n", 6);
 	if (errored || sort->a->count == 0 || is_sorted(sort))
 	{
 		free(sort->a);
